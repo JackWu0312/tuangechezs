@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: sueRimn
+ * @Date: 2020-08-27 10:30:25
+ * @LastEditors: sueRimn
+ * @LastEditTime: 2020-08-27 11:25:24
+-->
 # tuangechezs
 
 A new Flutter application.
@@ -14,3 +22,9 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+
+## 测试账号
+账号：13088888888
+密码：888888
+
