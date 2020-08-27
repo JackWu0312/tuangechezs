@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fake_weibo/fake_weibo.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:tuangechezs/event/ShareBackEvent.dart';
 import '../ui/ui.dart';
 import '../http/index.dart';
 import '../common/Unit.dart';
@@ -15,6 +16,7 @@ import 'package:okhttp_kit/okhttp_kit.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart' as path_provider;
 import './Storage.dart';
+
 class ShareBottomSheet extends StatefulWidget {
   final type;
   final imageurl;
@@ -25,12 +27,17 @@ class ShareBottomSheet extends StatefulWidget {
   final openApp;
   final description;
   final token;
+  final shareImageFile;
+  final shareImageData;
+
   ShareBottomSheet(
       {this.type,
       this.title,
       this.openApp = false,
       this.token = false,
       this.description,
+      this.shareImageFile,
+      this.shareImageData,
       this.h5Url,
       this.imageurl,
       this.sharetype,
@@ -53,6 +60,7 @@ class _ShareBottomSheetState extends State<ShareBottomSheet> {
       appKey: _WEIBO_APP_KEY,
       scope: _WEIBO_SCOPE,
     );
+
   @override
   void initState() {
     super.initState();
@@ -74,6 +82,7 @@ class _ShareBottomSheetState extends State<ShareBottomSheet> {
     if (_sharewobo != null) {
       _sharewobo.cancel();
     }
+    eventBus.fire(ShareBackEvent(false));
     super.dispose();
   }
 
@@ -83,7 +92,7 @@ class _ShareBottomSheetState extends State<ShareBottomSheet> {
     分享类型：1APP、2商品、3订单、4软文、5视频、6晒单、7海报、8名片
     platform  int
     分享平台：1微信、2微博，3QQ
-  
+
    */
   getShare(type, platform) {
     print(widget.dataId);
@@ -104,20 +113,29 @@ class _ShareBottomSheetState extends State<ShareBottomSheet> {
     getShare(widget.sharetype, 1);
     var model;
     if (widget.type == 'image') {
-      model = fluwx.WeChatShareImageModel(
-          image: '${widget.imageurl}',
-          thumbnail: '${widget.imageurl}',
-          transaction: '${widget.imageurl}',
-          scene: index == 1
-              ? fluwx.WeChatScene.SESSION
-              : fluwx.WeChatScene.TIMELINE,
-          description: "image");
+      if (null != widget.imageurl) {
+        model = fluwx.WeChatShareImageModel(
+            image: '${widget.imageurl}',
+            thumbnail: '${widget.imageurl}',
+            transaction: '${widget.imageurl}',
+            scene: index == 1
+                ? fluwx.WeChatScene.SESSION
+                : fluwx.WeChatScene.TIMELINE,
+            description: "image");
+      } else {
+        model = fluwx.WeChatShareImageModel.fromFile(widget.shareImageFile,
+            description: "image",
+            scene: index == 1
+                ? fluwx.WeChatScene.SESSION
+                : fluwx.WeChatScene.TIMELINE);
+      }
     } else if (widget.type == 'video') {
       String token = await Storage.getString('userInfo');
       model = fluwx.WeChatShareWebPageModel(
           webPage: widget.token
               ? '${widget.h5Url}/${json.decode(token)['id']}'
-              : '${widget.h5Url}', //个人二维码
+              : '${widget.h5Url}',
+          //个人二维码
           title: '${widget.title}',
           description: '${widget.title}',
           thumbnail: "assets://images/loginnew.png",
@@ -142,28 +160,37 @@ class _ShareBottomSheetState extends State<ShareBottomSheet> {
   shareWeibo() async {
     getShare(widget.sharetype, 2);
     if (widget.type == 'image') {
-      OkHttpClient client = OkHttpClientBuilder().build();
-      var resp = await client
-          .newCall(RequestBuilder()
-              .get()
-              .url(HttpUrl.parse('${widget.imageurl}'))
-              .build())
-          .enqueue();
-      if (resp.isSuccessful()) {
-        Directory saveDir = Platform.isAndroid
-            ? await path_provider.getExternalStorageDirectory()
-            : await path_provider.getApplicationDocumentsDirectory();
-        File saveFile =
-            File(path.join(saveDir.path, '${new DateTime.now()}.png'));
-        if (!saveFile.existsSync()) {
-          saveFile.createSync(recursive: true);
-          saveFile.writeAsBytesSync(
-            await resp.body().bytes(),
-            flush: true,
-          );
+      if (null != widget.imageurl) {
+        OkHttpClient client = OkHttpClientBuilder().build();
+        var resp = await client
+            .newCall(RequestBuilder()
+                .get()
+                .url(HttpUrl.parse('${widget.imageurl}'))
+                .build())
+            .enqueue();
+        if (resp.isSuccessful()) {
+          Directory saveDir = Platform.isAndroid
+              ? await path_provider.getExternalStorageDirectory()
+              : await path_provider.getApplicationDocumentsDirectory();
+          File saveFile =
+              File(path.join(saveDir.path, '${new DateTime.now()}.png'));
+          if (!saveFile.existsSync()) {
+            saveFile.createSync(recursive: true);
+            saveFile.writeAsBytesSync(
+              await resp.body().bytes(),
+              flush: true,
+            );
+          }
+          await _weibo.shareImage(
+              text: '买车就选团个车', imageUri: Uri.file(saveFile.path));
         }
-        await _weibo.shareImage(
-            text: '买车就选团个车', imageUri: Uri.file(saveFile.path));
+      } else {
+        print("weibo = " + widget.shareImageFile.path);
+        _weibo.shareImage(
+            text: '买车就选团个车',
+            imageData: widget.shareImageData,
+//            imageUri: Uri.file(widget.shareImageFile.path)
+        );
       }
     } else if (widget.type == 'video') {
       String token = await Storage.getString('userInfo');
@@ -188,7 +215,9 @@ class _ShareBottomSheetState extends State<ShareBottomSheet> {
         title: '${widget.title}',
         description: '${widget.description}',
         thumbData: thumbData.buffer.asUint8List(),
-        webpageUrl: widget.openApp ? '${widget.h5Url}/1' : '${widget.h5Url}', // 1 表示h5 没有打开app悬浮tabar
+        webpageUrl: widget.openApp
+            ? '${widget.h5Url}/1'
+            : '${widget.h5Url}', // 1 表示h5 没有打开app悬浮tabar
       );
     }
   }
