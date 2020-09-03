@@ -1,4 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:tuangechezs/page/mall/exchange.dart';
+import 'package:tuangechezs/page/mall/goodsdetail.dart';
+import 'package:tuangechezs/page/mall/goodspayment.dart';
+import 'package:tuangechezs/page/mall/ordercom.dart';
+import 'package:tuangechezs/page/mall/paysuccessgood.dart';
+import 'package:tuangechezs/page/my/addressadd.dart';
+import 'package:tuangechezs/page/my/addresslist.dart';
+import 'package:tuangechezs/page/my/addresslistnew.dart';
+import 'package:tuangechezs/page/my/adresseditor.dart';
+import 'package:tuangechezs/page/my/listorder.dart';
+import 'package:tuangechezs/page/my/rollbag.dart';
 import '../page/login/login.dart';
 import '../page/login/register.dart';
 import '../page/index.dart';
@@ -39,6 +50,17 @@ final routes = {
   '/agentcard':  (context,{arguments})=> Agentcard(arguments:arguments),
   '/easywebview':  (context,{arguments})=> Easywebview(arguments:arguments),
   '/driedwebview':(context,{arguments}) => Driedwebview(arguments:arguments),
+  '/addresslist': (context) => Addresslist(),
+  '/addresslistnew': (context) => Addresslistnew(),
+  '/addressadd': (context) => Addressadd(),
+  '/adresseditor': (context,{arguments})=> Adresseditor(arguments:arguments),
+  '/exchange': (context) => Exchange(),
+  '/goodsdetail': (context,{arguments}) => Goodsdetail(arguments:arguments),
+  '/ordercom': (context,{arguments}) => Ordercom(arguments:arguments),
+  '/goodspayment': (context,{arguments}) => Goodspayment(arguments:arguments),
+  '/paysuccessgood': (context,{arguments}) => Paysuccessgood(arguments:arguments),
+  '/listorder': (context) => Listorder(),
+  '/rollbag': (context) => Rollbag(),
 };
 
 //固定写法

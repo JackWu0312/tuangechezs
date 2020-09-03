@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import '../common/Storage.dart';
 class HttpUtlis {
-  static String _domain = 'https://api.tuangeche.com.cn/';
-  //  static String _domain = 'http://192.168.0.74:8080/';
+//  static String _domain = 'https://api.tuangeche.com.cn/';
+    static String _domain = 'http://192.168.1.83:8080/';
   static getToken() async {
     try {
       String token = await Storage.getString('token');

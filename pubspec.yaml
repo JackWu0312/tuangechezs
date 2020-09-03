@@ -52,6 +52,9 @@ dependencies:
   screen: 0.0.5
   flutter_forbidshot: 0.0.2
   event_bus: ^1.1.0
+  city_pickers: ^0.1.29
+  flutter_easyrefresh: ^2.0.4
+  flutter_html: ^0.11.0
   # flutter_qq: ^0.0.5
   
 dev_dependencies:
@@ -207,6 +210,35 @@ flutter:
     - images/invitation.png
     - images/2.0x/invitation.png
     - images/3.0x/invitation.png
+    - images/editer.png
+    - images/2.0x/editer.png
+    - images/3.0x/editer.png
+    - images/3.0x/editer.png
+    - images/3.0x/editer.png
+    - images/exchange.png
+    - images/2.0x/exchange.png
+    - images/3.0x/exchange.png
+    - images/integral.png
+    - images/2.0x/integral.png
+    - images/3.0x/integral.png
+    - images/pointbg.png
+    - images/2.0x/pointbg.png
+    - images/3.0x/pointbg.png
+    - images/rightmy.png
+    - images/2.0x/rightmy.png
+    - images/3.0x/rightmy.png
+    - images/searchnew.png
+    - images/2.0x/searchnew.png
+    - images/3.0x/searchnew.png
+    - images/coupon.png
+    - images/2.0x/coupon.png
+    - images/3.0x/coupon.png
+    - images/upper.png
+    - images/2.0x/upper.png
+    - images/3.0x/upper.png
+    - images/lower.png
+    - images/2.0x/lower.png
+    - images/3.0x/lower.png
     - images/icon_back.png
     - images/place_nodata.png
     - images/player_lock.png

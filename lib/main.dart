@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tuangechezs/provider/Addreslist.dart';
+import 'package:tuangechezs/provider/Addressselect.dart';
+import 'package:tuangechezs/provider/Integral.dart';
 import './common/NoSplash.dart';
 import './router/router.dart';
 import 'dart:io'; //提供Platform接口
@@ -78,6 +81,9 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider(create: (_) => Orderback()),
         ChangeNotifierProvider(create: (_) => Share()),
+        ChangeNotifierProvider(create: (_) => Addreslist()),
+        ChangeNotifierProvider(create: (_) => Addressselect()),
+        ChangeNotifierProvider(create: (_) => Integral()),
       ],
       child: MaterialApp(
         // home: Tabs(),

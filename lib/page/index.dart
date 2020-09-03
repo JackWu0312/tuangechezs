@@ -3,6 +3,7 @@ import '../ui/ui.dart';
 import './home/home.dart';
 import './order/order.dart';
 import './my/my.dart';
+import 'mall/mall.dart';
 class IndexPages extends StatefulWidget {
   IndexPages({Key key}) : super(key: key);
   @override
@@ -25,6 +26,7 @@ class _IndexPagesState extends State<IndexPages> {
           index: _currentIndex,
           children: <Widget>[
            Home(),
+           Mall(),
            Order(),
            My()
           ],
@@ -55,6 +57,19 @@ class _IndexPagesState extends State<IndexPages> {
                 height: Ui.width(55.0),
               ),
               title: Text("推广"),
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                'images/2.0x/extension.png',
+                width: Ui.width(65.0),
+                height: Ui.width(55.0),
+              ),
+              activeIcon: Image.asset(
+                'images/2.0x/extensionselect.png',
+                width: Ui.width(65.0),
+                height: Ui.width(55.0),
+              ),
+              title: Text("兑换"),
             ),
             BottomNavigationBarItem(
               icon: Image.asset(
