@@ -508,13 +508,13 @@ class _GoodspaymentState extends State<Goodspayment> {
                         alignment: Alignment.center,
                         width: Ui.width(750),
                         height: Ui.width(90),
-                        decoration: BoxDecoration(
+                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
                             colors: [
-                              Color(0xFFEA4802),
-                              Color(0xFFD10123),
+                              Color(0xFF5BBEFF),
+                              Color(0xFF466EFF),
                             ],
                           ),
                         ),

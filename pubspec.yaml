@@ -269,6 +269,9 @@ flutter:
     - images/rollbag.png
     - images/2.0x/rollbag.png
     - images/3.0x/rollbag.png
+    - images/backnew.png
+    - images/2.0x/backnew.png
+    - images/3.0x/backnew.png
     - images/icon_back.png
     - images/place_nodata.png
     - images/player_lock.png

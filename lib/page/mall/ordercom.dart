@@ -796,15 +796,15 @@ class _OrdercomState extends State<Ordercom> {
                           height: Ui.width(90),
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                              colors: [
-                                Color(0xFFEA4802),
-                                Color(0xFFD10123),
-                              ],
-                            ),
+                          gradient: LinearGradient(
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                            colors: [
+                              Color(0xFF5BBEFF),
+                              Color(0xFF466EFF),
+                            ],
                           ),
+                        ),
                           child: Text(
                             '立即支付',
                             style: TextStyle(

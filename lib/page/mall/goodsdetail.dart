@@ -532,8 +532,8 @@ class _GoodsdetailState extends State<Goodsdetail>
                                     begin: Alignment.centerLeft,
                                     end: Alignment.centerRight,
                                     colors: [
-                                      Color(0xFFEA4802),
-                                      Color(0xFFD10123),
+                                      Color(0xFF5BBEFF),
+                                      Color(0xFF466EFF),
                                     ],
                                   ),
                                 ),
@@ -709,30 +709,30 @@ class _GoodsdetailState extends State<Goodsdetail>
           child: Container(
               padding:
                   new EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                    Color(0xFF5BBEFF),
-                    Color(0xFF466EFF),
-                  ],
-                ),
-              ),
+              // decoration: BoxDecoration(
+              //   gradient: LinearGradient(
+              //     begin: Alignment.centerLeft,
+              //     end: Alignment.centerRight,
+              //     colors: [
+              //       Color(0xFF5BBEFF),
+              //       Color(0xFF466EFF),
+              //     ],
+              //   ),
+              // ),
               child: Column(
                 children: <Widget>[
                   Container(
                     height: Ui.height(90),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: [
-                          Color(0xFF5BBEFF),
-                          Color(0xFF466EFF),
-                        ],
-                      ),
-                    ),
+                    // decoration: BoxDecoration(
+                    //   gradient: LinearGradient(
+                    //     begin: Alignment.centerLeft,
+                    //     end: Alignment.centerRight,
+                    //     colors: [
+                    //       Color(0xFF5BBEFF),
+                    //       Color(0xFF466EFF),
+                    //     ],
+                    //   ),
+                    // ),
                     child: Stack(
                       children: <Widget>[
                         Positioned(
@@ -743,7 +743,7 @@ class _GoodsdetailState extends State<Goodsdetail>
                                 Navigator.pop(context);
                               },
                               child: Image.asset(
-                                'images/2.0x/back.png',
+                                'images/2.0x/backnew.png',
                                 width: Ui.width(20),
                                 height: Ui.width(36),
                               ),
@@ -753,7 +753,7 @@ class _GoodsdetailState extends State<Goodsdetail>
                           child: Text(
                             '商品详情',
                             style: TextStyle(
-                                color: Color(0XFFFFFFFF),
+                                color: Color(0XFF111F37),
                                 fontSize: Ui.setFontSizeSetSp(36),
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'PingFangSC-Regular,PingFang SC'),
@@ -764,11 +764,11 @@ class _GoodsdetailState extends State<Goodsdetail>
                   ),
                   TabBar(
                     controller: _tabController,
-                    unselectedLabelColor: Color(0xFFffffff),
+                    unselectedLabelColor: Color(0xFF111F37),
                     labelColor: Color(0xFFD10123),
                     indicatorColor: Color(0xFFD10123),
                     indicatorPadding:
-                    EdgeInsets.fromLTRB(Ui.width(145), 0, Ui.width(145), 0),
+                        EdgeInsets.fromLTRB(Ui.width(145), 0, Ui.width(145), 0),
                     unselectedLabelStyle: new TextStyle(
                         fontWeight: FontWeight.w500,
                         fontFamily: 'PingFangSC-Medium,PingFang SC',
@@ -786,11 +786,10 @@ class _GoodsdetailState extends State<Goodsdetail>
                       ),
                     ],
                   ),
-
                 ],
               )),
-          preferredSize: Size(MediaQuery.of(context).size.width, Ui.width(210))
-      ),
+          preferredSize:
+              Size(MediaQuery.of(context).size.width, Ui.width(210))),
 //      AppBar(
 //        title: Text(
 //          '商品详情',
@@ -1196,8 +1195,8 @@ class _GoodsdetailState extends State<Goodsdetail>
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
                             colors: [
-                              Color(0xFFEA4802),
-                              Color(0xFFD10123),
+                              Color(0xFF5BBEFF),
+                              Color(0xFF466EFF),
                             ],
                           ),
                         ),
