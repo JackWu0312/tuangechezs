@@ -6,6 +6,7 @@ import 'package:fake_weibo/fake_weibo.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tuangechezs/event/ShareBackEvent.dart';
+import 'package:tuangechezs/provider/Integral.dart';
 import '../ui/ui.dart';
 import '../http/index.dart';
 import '../common/Unit.dart';
@@ -102,6 +103,8 @@ class _ShareBottomSheetState extends State<ShareBottomSheet> {
       if (value['errno'] == 0) {
         final counter = Provider.of<Share>(context);
         counter.increment(true);
+        final counterIntegral = Provider.of<Integral>(context);
+        counterIntegral.increment(true);
       }
     }, failure: (error) {
       Unit.setToast(error, context);
