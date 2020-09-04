@@ -465,34 +465,34 @@ class _GoodspaymentState extends State<Goodspayment> {
                           ],
                         ),
                       ),
-                      Container(
-                        width: Ui.width(750),
-                        height: Ui.width(16),
-                        color: Color(0xFFF8F9FB),
-                      ),
-                      Container(
-                        width: Ui.width(750),
-                        height: Ui.width(90),
-                        color: Color(0xFFFFFFFF),
-                        padding: EdgeInsets.fromLTRB(
-                            Ui.width(40), 0, Ui.width(40), 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              '微信支付',
-                              style: TextStyle(
-                                  color: Color(0xFF111F37),
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: 'PingFangSC-Medium,PingFang SC',
-                                  fontSize: Ui.setFontSizeSetSp(30.0)),
-                            ),
-                            Image.asset('images/2.0x/select_red.png',
-                                width: Ui.width(38), height: Ui.width(38))
-                          ],
-                        ),
-                      ),
+//                      Container(
+//                        width: Ui.width(750),
+//                        height: Ui.width(16),
+//                        color: Color(0xFFF8F9FB),
+//                      ),
+//                      Container(
+//                        width: Ui.width(750),
+//                        height: Ui.width(90),
+//                        color: Color(0xFFFFFFFF),
+//                        padding: EdgeInsets.fromLTRB(
+//                            Ui.width(40), 0, Ui.width(40), 0),
+//                        child: Row(
+//                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                          crossAxisAlignment: CrossAxisAlignment.center,
+//                          children: <Widget>[
+//                            Text(
+//                              '微信支付',
+//                              style: TextStyle(
+//                                  color: Color(0xFF111F37),
+//                                  fontWeight: FontWeight.w400,
+//                                  fontFamily: 'PingFangSC-Medium,PingFang SC',
+//                                  fontSize: Ui.setFontSizeSetSp(30.0)),
+//                            ),
+//                            Image.asset('images/2.0x/select_red.png',
+//                                width: Ui.width(38), height: Ui.width(38))
+//                          ],
+//                        ),
+//                      ),
                     ],
                   ),
                 ),
