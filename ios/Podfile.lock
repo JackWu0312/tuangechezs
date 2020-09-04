@@ -1,4 +1,6 @@
 PODS:
+  - city_pickers (0.0.1):
+    - Flutter
   - fake_weibo (0.0.1):
     - Flutter
     - Weibo_SDK (~> 3.2.5.1)
@@ -25,7 +27,7 @@ PODS:
     - Flutter
   - path_provider_macos (0.0.1):
     - Flutter
-  - "permission_handler (4.2.0+hotfix.3)":
+  - "permission_handler (4.4.0+hotfix.4)":
     - Flutter
   - screen (0.0.1):
     - Flutter
@@ -58,6 +60,7 @@ PODS:
   - Weibo_SDK (3.2.5.1)
 
 DEPENDENCIES:
+  - city_pickers (from `.symlinks/plugins/city_pickers/ios`)
   - fake_weibo (from `.symlinks/plugins/fake_weibo/ios`)
   - Flutter (from `Flutter`)
   - flutter_forbidshot (from `.symlinks/plugins/flutter_forbidshot/ios`)
@@ -91,6 +94,8 @@ SPEC REPOS:
     - Weibo_SDK
 
 EXTERNAL SOURCES:
+  city_pickers:
+    :path: ".symlinks/plugins/city_pickers/ios"
   fake_weibo:
     :path: ".symlinks/plugins/fake_weibo/ios"
   Flutter:
@@ -143,6 +148,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/webview_flutter/ios"
 
 SPEC CHECKSUMS:
+  city_pickers: b0370f4c35c201723b5b7fcce10ec29b59d5bc35
   fake_weibo: 389919d952e8ed6741b4e70eb39a25b27cf21538
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_forbidshot: feac5273065c5b7b6b57a9c6ec4936e3be473523
@@ -155,7 +161,7 @@ SPEC CHECKSUMS:
   image_picker: e3eacd46b94694dde7cf2705955cece853aa1a8f
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   path_provider_macos: f760a3c5b04357c380e2fddb6f9db6f3015897e0
-  permission_handler: 40520ab8ad1bb78a282b832464e995ec87f77ec6
+  permission_handler: 8278954f2382902f63f00dd8828769c0bd6d511b
   screen: abd91ca7bf3426e1cc3646d27e9b2358d6bf07b0
   shared_preferences: 430726339841afefe5142b9c1f50cb6bd7793e01
   shared_preferences_macos: f3f29b71ccbb56bf40c9dd6396c9acf15e214087
