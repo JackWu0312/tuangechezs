@@ -104,7 +104,6 @@ class _OrderState extends State<Order> {
   Widget build(BuildContext context) {
     final counter = Provider.of<Orderback>(context);
     if (counter.count) {
-      print('object');
       list = [];
       nolist = true;
       isMore = true;

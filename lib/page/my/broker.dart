@@ -45,7 +45,7 @@ class _BrokerState extends State<Broker> {
     super.initState();
     getData();
     _focusNodemobiles.addListener(() {
-      print(_focusNodemobiles.hasFocus);
+      // print(_focusNodemobiles.hasFocus);
       if (_focusNodemobiles.hasFocus) {
         name.text = names;
         desc.text = descs;
@@ -53,19 +53,19 @@ class _BrokerState extends State<Broker> {
       }
     });
     _focusNodedescs.addListener(() {
-      print(_focusNodedescs.hasFocus);
+      // print(_focusNodedescs.hasFocus);
       if (_focusNodedescs.hasFocus) {
         mobile.text = mobiles;
       }
     });
     _focusNodenames.addListener(() {
-      print(_focusNodenames.hasFocus);
+      // print(_focusNodenames.hasFocus);
       if (_focusNodenames.hasFocus) {
         mobile.text = mobiles;
       }
     });
      _focusNodewechats.addListener(() {
-      print(_focusNodewechats.hasFocus);
+      // print(_focusNodewechats.hasFocus);
       if (_focusNodewechats.hasFocus) {
         mobile.text = mobiles;
       }

@@ -98,7 +98,6 @@ class _AuthenticationState extends State<Authentication> {
         setState(() {
           data = value['data'];
           name.text = value['data']['name'];
-          print(name.text);
           idcard.text = value['data']['idcard'];
           bankNo.text = value['data']['bankNo'];
           address.text = value['data']['address'];

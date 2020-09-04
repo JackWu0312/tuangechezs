@@ -35,7 +35,6 @@ class _OrdercomState extends State<Ordercom> {
   }
 
   calculate(id) async {
-    print(int.parse(widget.arguments['num']));
     await HttpUtlis.post('third/points/goods/calculate',
         params: {'id': id, 'number': int.parse(widget.arguments['num'])},
         success: (value) {
@@ -46,7 +45,6 @@ class _OrdercomState extends State<Ordercom> {
         });
       }
     }, failure: (error) {
-      print(error);
       Toast.show('${error}', context,
           backgroundColor: Color(0xff5b5956),
           backgroundRadius: Ui.width(16),

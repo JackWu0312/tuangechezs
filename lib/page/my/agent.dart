@@ -45,7 +45,6 @@ class _AgentState extends State<Agent> {
     super.initState();
     getData();
     _focusNodemobiles.addListener(() {
-      print(_focusNodemobiles.hasFocus);
       if (_focusNodemobiles.hasFocus) {
         address.text = addresss;
         desc.text = descs;
@@ -53,19 +52,16 @@ class _AgentState extends State<Agent> {
       }
     });
     _focusNodedescs.addListener(() {
-      print(_focusNodedescs.hasFocus);
       if (_focusNodedescs.hasFocus) {
         mobile.text = mobiles;
       }
     });
     _focusNodeaddress.addListener(() {
-      print(_focusNodeaddress.hasFocus);
       if (_focusNodeaddress.hasFocus) {
         mobile.text = mobiles;
       }
     });
     _focusNodewechats.addListener(() {
-      print(_focusNodewechats.hasFocus);
       if (_focusNodewechats.hasFocus) {
         mobile.text = mobiles;
       }
@@ -93,7 +89,6 @@ class _AgentState extends State<Agent> {
   }
 
   submit() async {
-    print(wechat.text);
     if (!RegExp(r"^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$")
         .hasMatch(mobile.text)) {
       Unit.setToast("请输入正确的手机号码", context);

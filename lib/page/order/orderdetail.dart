@@ -20,7 +20,7 @@ class _OrderdetailState extends State<Orderdetail> {
   void initState() { 
     super.initState();
     getData();
-    print(widget.arguments['id']);
+    // print(widget.arguments['id']);
   }
  getData() async {
       await HttpUtlis.get(

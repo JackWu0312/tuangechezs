@@ -130,8 +130,7 @@ class _MallState extends State<Mall>
 
   getGoodList() async {
     await HttpUtlis.get('third/points/goods', success: (value) async {
-      print(getGoodList);
-      print(value);
+     
       if (value['errno'] == 0) {
         setState(() {
           listAll.addAll(value['data']['list']);
@@ -149,13 +148,6 @@ class _MallState extends State<Mall>
   getData() async {
     await HttpUtlis.get('wx/mall/index', success: (value) async {
       if (value['errno'] == 0) {
-        // List list = [];
-        // for (var i = 0, len = value['data']['tags'].length; i < len; i++) {
-        //   list.add(value['data']['tags'][i]['label']);
-        // }
-        // 草！！
-        print('object');
-        print(value['data']['banners']);
         setState(() {
           banners = value['data']['banners'];
           tags = value['data']['tags'];
@@ -210,8 +202,6 @@ class _MallState extends State<Mall>
 /*获取积分和banner*/
   getPoint() async {
     await HttpUtlis.get('third/points/index', success: (value) async {
-      print("getPoint");
-      print(value);
       if (value['errno'] == 0) {
         setState(() {
           item = value['data'];
