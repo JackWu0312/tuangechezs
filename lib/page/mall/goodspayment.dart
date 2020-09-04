@@ -120,7 +120,7 @@ class _GoodspaymentState extends State<Goodspayment> {
   // }
 
   getData() async {
-    await HttpUtlis.get('wx/points/order/${widget.arguments['id']}',
+    await HttpUtlis.get('third/points/order/${widget.arguments['id']}',
         success: (value) {
       // print(value);
       if (value['errno'] == 0) {
@@ -163,9 +163,8 @@ class _GoodspaymentState extends State<Goodspayment> {
   }
 
   sunmit() async {
-    await HttpUtlis.post('wx/order/prepay',
-        params: {'orderId': item['order']['id']}, success: (value) {
-      print(value['data']);
+    await HttpUtlis.post('third/points/order/pay',
+        params: {'id': item['order']['id']}, success: (value) {
       if (value['data']['appId'] != null) {
         fluwx.payWithWeChat(
           appId: value['data']['appId'],
@@ -205,32 +204,64 @@ class _GoodspaymentState extends State<Goodspayment> {
 
     Ui.init(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          '付款记录',
-          style: TextStyle(
-              color: Color(0xFF111F37),
-              fontWeight: FontWeight.w500,
-              fontFamily: 'PingFangSC-Medium,PingFang SC',
-              fontSize: Ui.setFontSizeSetSp(36.0)),
-        ),
-        centerTitle: true,
-        elevation: 0,
-        brightness: Brightness.light,
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
+      appBar:
+      PreferredSize(
           child: Container(
-            alignment: Alignment.center,
-            child: Image.asset(
-              'images/2.0x/back.png',
-              width: Ui.width(21),
-              height: Ui.width(37),
-            ),
-          ),
-        ),
-      ),
+              padding: new EdgeInsets.only(
+                  top: MediaQuery.of(context).padding.top),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    Color(0xFF5BBEFF),
+                    Color(0xFF466EFF),
+                  ],
+                ),
+              ),
+              child: Container(
+                height: Ui.height(90),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
+                      Color(0xFF5BBEFF),
+                      Color(0xFF466EFF),
+                    ],
+                  ),
+                ),
+                child: Stack(
+                  children: <Widget>[
+                    Positioned(
+                        left: Ui.width(30),
+                        top: Ui.width(30),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Image.asset(
+                            'images/2.0x/back.png',
+                            width: Ui.width(20),
+                            height: Ui.width(36),
+                          ),
+                        )),
+                    Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        '付款记录',
+                        style: TextStyle(
+                            color: Color(0XFFFFFFFF),
+                            fontSize: Ui.setFontSizeSetSp(36),
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'PingFangSC-Regular,PingFang SC'),
+                      ),
+                    )
+                  ],
+                ),
+              )),
+          preferredSize:
+          Size(MediaQuery.of(context).size.width, Ui.width(90))),
       body: isloading
           ? Stack(
               children: <Widget>[
@@ -374,27 +405,27 @@ class _GoodspaymentState extends State<Goodspayment> {
                                                     fontSize:
                                                         Ui.setFontSizeSetSp(
                                                             24.0))),
-                                            TextSpan(
-                                                text:
-                                                    '+${item['goods']['price']}',
-                                                style: TextStyle(
-                                                    color: Color(0xFFD10123),
-                                                    fontWeight: FontWeight.w400,
-                                                    fontFamily:
-                                                        'PingFangSC-Medium,PingFang SC',
-                                                    fontSize:
-                                                        Ui.setFontSizeSetSp(
-                                                            32.0))),
-                                            TextSpan(
-                                                text: '元',
-                                                style: TextStyle(
-                                                    color: Color(0xFFD10123),
-                                                    fontWeight: FontWeight.w400,
-                                                    fontFamily:
-                                                        'PingFangSC-Medium,PingFang SC',
-                                                    fontSize:
-                                                        Ui.setFontSizeSetSp(
-                                                            24.0))),
+//                                            TextSpan(
+//                                                text:
+//                                                    '+${item['goods']['price']}',
+//                                                style: TextStyle(
+//                                                    color: Color(0xFFD10123),
+//                                                    fontWeight: FontWeight.w400,
+//                                                    fontFamily:
+//                                                        'PingFangSC-Medium,PingFang SC',
+//                                                    fontSize:
+//                                                        Ui.setFontSizeSetSp(
+//                                                            32.0))),
+//                                            TextSpan(
+//                                                text: '元',
+//                                                style: TextStyle(
+//                                                    color: Color(0xFFD10123),
+//                                                    fontWeight: FontWeight.w400,
+//                                                    fontFamily:
+//                                                        'PingFangSC-Medium,PingFang SC',
+//                                                    fontSize:
+//                                                        Ui.setFontSizeSetSp(
+//                                                            24.0))),
                                           ],
                                         ),
                                       ),
@@ -429,7 +460,7 @@ class _GoodspaymentState extends State<Goodspayment> {
                                   fontFamily: 'PingFangSC-Medium,PingFang SC',
                                   fontSize: Ui.setFontSizeSetSp(30.0)),
                             ),
-                            Image.asset('images/2.0x/select.png',
+                            Image.asset('images/2.0x/select_red.png',
                                 width: Ui.width(38), height: Ui.width(38))
                           ],
                         ),
@@ -457,7 +488,7 @@ class _GoodspaymentState extends State<Goodspayment> {
                                   fontFamily: 'PingFangSC-Medium,PingFang SC',
                                   fontSize: Ui.setFontSizeSetSp(30.0)),
                             ),
-                            Image.asset('images/2.0x/select.png',
+                            Image.asset('images/2.0x/select_red.png',
                                 width: Ui.width(38), height: Ui.width(38))
                           ],
                         ),
@@ -517,7 +548,7 @@ class _GoodspaymentState extends State<Goodspayment> {
                                     fontFamily: 'PingFangSC-Medium,PingFang SC',
                                     fontSize: Ui.setFontSizeSetSp(28.0))),
                             Text(
-                                '${item['order']['integralPrice']}积分+${item['order']['actualPrice']}元',
+                                '${item['order']['integralPrice']}积分',
                                 style: TextStyle(
                                     color: Color(0xFFD92818),
                                     fontWeight: FontWeight.w400,

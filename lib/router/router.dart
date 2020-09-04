@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:tuangechezs/common/bannerwebview.dart';
+import 'package:tuangechezs/page/mall/coupon.dart';
 import 'package:tuangechezs/page/mall/exchange.dart';
 import 'package:tuangechezs/page/mall/goodsdetail.dart';
 import 'package:tuangechezs/page/mall/goodspayment.dart';
 import 'package:tuangechezs/page/mall/ordercom.dart';
 import 'package:tuangechezs/page/mall/paysuccessgood.dart';
+import 'package:tuangechezs/page/mall/pointlist.dart';
 import 'package:tuangechezs/page/my/addressadd.dart';
 import 'package:tuangechezs/page/my/addresslist.dart';
 import 'package:tuangechezs/page/my/addresslistnew.dart';
@@ -61,6 +64,9 @@ final routes = {
   '/paysuccessgood': (context,{arguments}) => Paysuccessgood(arguments:arguments),
   '/listorder': (context) => Listorder(),
   '/rollbag': (context) => Rollbag(),
+  '/pointlist': (context) => Pointlist(),
+  '/bannerwebview': (context,{arguments}) => Bannerwebview(arguments:arguments),
+  '/coupon': (context) => Coupon(),
 };
 
 //固定写法

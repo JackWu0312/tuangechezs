@@ -24,7 +24,7 @@ class _AddresslistnewState extends State<Addresslistnew> {
     getData();
   }
   getData() async {
-    await HttpUtlis.get('wx/address/list',
+    await HttpUtlis.get('third/address/list',
         success: (value) {
       if (value['errno'] == 0) {
         setState(() {
@@ -58,46 +58,83 @@ class _AddresslistnewState extends State<Addresslistnew> {
     Ui.init(context);
     return Container(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            '我的收货地址',
-            style: TextStyle(
-                color: Color(0xFF111F37),
-                fontWeight: FontWeight.w500,
-                fontFamily: 'PingFangSC-Medium,PingFang SC',
-                fontSize: Ui.setFontSizeSetSp(36.0)),
-          ),
-          centerTitle: true,
-          elevation: 0,
-          brightness: Brightness.light,
-          leading: InkWell(
-            onTap: (){
-               Navigator.pop(context);
-            },
+        appBar: PreferredSize(
             child: Container(
-              alignment: Alignment.center,
-              child: Image.asset('images/2.0x/icon_back.png',width: Ui.width(21),height: Ui.width(37),),
-            ),
-          ),
-          actions: <Widget>[
-            InkWell(
-                onTap: (){
-                  Navigator.pushNamed(context, '/addressadd');
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.fromLTRB(0, 0, Ui.width(40), 0),
-                  child: Text(
-                    '新增地址',
-                    style: TextStyle(
-                        color: Color(0xFF111F37),
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'PingFangSC-Medium,PingFang SC',
-                        fontSize: Ui.setFontSizeSetSp(30.0)),
+                padding: new EdgeInsets.only(
+                    top: MediaQuery.of(context).padding.top),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
+                      Color(0xFF5BBEFF),
+                      Color(0xFF466EFF),
+                    ],
                   ),
-                ))
-          ],
-        ),
+                ),
+                child: Container(
+                  height: Ui.height(90),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [
+                        Color(0xFF5BBEFF),
+                        Color(0xFF466EFF),
+                      ],
+                    ),
+                  ),
+                  child: Stack(
+                    children: <Widget>[
+                      Positioned(
+                          left: Ui.width(30),
+                          top: Ui.width(30),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Image.asset(
+                              'images/2.0x/back.png',
+                              width: Ui.width(20),
+                              height: Ui.width(36),
+                            ),
+                          )),
+                      Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          '我的收货地址',
+                          style: TextStyle(
+                              color: Color(0XFFFFFFFF),
+                              fontSize: Ui.setFontSizeSetSp(36),
+                              fontWeight: FontWeight.w500,
+                              fontFamily:
+                              'PingFangSC-Regular,PingFang SC'),
+                        ),
+                      ),
+                      Positioned(
+                          left: Ui.width(600),
+                          top: Ui.width(20),
+                          child: InkWell(
+                              onTap: (){
+                                Navigator.pushNamed(context, '/addressadd');
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                padding: EdgeInsets.fromLTRB(0, 0, Ui.width(40), 0),
+                                child: Text(
+                                  '新增地址',
+                                  style: TextStyle(
+                                      color: Color(0XFFFFFFFF),
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: 'PingFangSC-Medium,PingFang SC',
+                                      fontSize: Ui.setFontSizeSetSp(30.0)),
+                                ),
+                              )))
+                    ],
+                  ),
+                )),
+            preferredSize:
+            Size(MediaQuery.of(context).size.width, Ui.width(90))),
         body:isloading? Container(
           width: double.infinity,
           height: double.infinity,

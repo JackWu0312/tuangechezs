@@ -239,6 +239,36 @@ flutter:
     - images/lower.png
     - images/2.0x/lower.png
     - images/3.0x/lower.png
+    - images/mall_select.png
+    - images/2.0x/mall_select.png
+    - images/3.0x/mall_select.png
+    - images/mall.png
+    - images/2.0x/mall.png
+    - images/3.0x/mall.png
+    - images/add.png
+    - images/2.0x/add.png
+    - images/3.0x/add.png
+    - images/clonse.png
+    - images/2.0x/clonse.png
+    - images/3.0x/clonse.png
+    - images/reduce.png
+    - images/2.0x/reduce.png
+    - images/3.0x/reduce.png
+    - images/adress.png
+    - images/2.0x/adress.png
+    - images/3.0x/adress.png
+    - images/time.png
+    - images/2.0x/time.png
+    - images/3.0x/time.png
+    - images/select_red.png
+    - images/2.0x/select_red.png
+    - images/3.0x/select_red.png
+    - images/payuccess.png
+    - images/2.0x/payuccess.png
+    - images/3.0x/payuccess.png
+    - images/rollbag.png
+    - images/2.0x/rollbag.png
+    - images/3.0x/rollbag.png
     - images/icon_back.png
     - images/place_nodata.png
     - images/player_lock.png

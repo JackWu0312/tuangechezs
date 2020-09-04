@@ -21,19 +21,50 @@ class _PaysuccessgoodState extends State<Paysuccessgood> {
   Widget build(BuildContext context) {
     Ui.init(context);
     return Scaffold(
-      appBar: AppBar(
-          title: Text(
-            '支付订单',
-            style: TextStyle(
-                color: Color(0xFF111F37),
-                fontWeight: FontWeight.w500,
-                fontFamily: 'PingFangSC-Medium,PingFang SC',
-                fontSize: Ui.setFontSizeSetSp(36.0)),
-          ),
-          centerTitle: true,
-          elevation: 0,
-          brightness: Brightness.light,
-          leading: Text('')),
+      appBar: PreferredSize(
+          child: Container(
+              padding: new EdgeInsets.only(
+                  top: MediaQuery.of(context).padding.top),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    Color(0xFF5BBEFF),
+                    Color(0xFF466EFF),
+                  ],
+                ),
+              ),
+              child: Container(
+                height: Ui.height(90),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
+                      Color(0xFF5BBEFF),
+                      Color(0xFF466EFF),
+                    ],
+                  ),
+                ),
+                child: Stack(
+                  children: <Widget>[
+                    Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        '支付订单',
+                        style: TextStyle(
+                            color: Color(0XFFFFFFFF),
+                            fontSize: Ui.setFontSizeSetSp(36),
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'PingFangSC-Regular,PingFang SC'),
+                      ),
+                    )
+                  ],
+                ),
+              )),
+          preferredSize:
+          Size(MediaQuery.of(context).size.width, Ui.width(90))),
       body: Container(
         color: Colors.white,
         child: ListView(
@@ -71,7 +102,7 @@ class _PaysuccessgoodState extends State<Paysuccessgood> {
                         fontSize: Ui.setFontSizeSetSp(32.0)),
                   ),
                   Text(
-                 widget.arguments['goods']=='goods'?'': '${widget.arguments['data']['order']['integralPrice']}积分+${widget.arguments['data']['order']['actualPrice']}元',
+                 widget.arguments['goods']=='goods'?'': '${widget.arguments['data']['order']['integralPrice']}积分',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Color(0xFFD10123),
@@ -99,7 +130,7 @@ class _PaysuccessgoodState extends State<Paysuccessgood> {
                 children: <Widget>[
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, '/listorder');
+                      Navigator.pushNamed(context, '/exchange');
                     },
                     child: Container(
                       width: Ui.width(280),
