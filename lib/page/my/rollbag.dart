@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../common/Unit.dart';
 import '../../ui/ui.dart';
 import '../../http/index.dart';
 import 'package:toast/toast.dart';
@@ -49,7 +50,6 @@ class _RollbagState extends State<Rollbag> {
       await HttpUtlis.get('third/coupon/mine?page=${page}&limit=${limit}',
           success: (value) {
         if (value['errno'] == 0) {
-          print(value['data']['list'].length);
           var listdata = value['data']['list'];
           for (var i = 0, len = listdata.length; i < len; i++) {
             listdata[i]['select'] = false;
@@ -83,8 +83,10 @@ class _RollbagState extends State<Rollbag> {
   }
 
   var style = 1;
-  var userMobile = '';
-  var userName = '';
+  // var userMobile = '';
+  // var userName = '';
+  var listUser = [];
+  var active = null;
 
   getstyle() {
     if (Platform.isIOS) {
@@ -98,40 +100,59 @@ class _RollbagState extends State<Rollbag> {
     }
   }
 
-
-  showDialogForRoll() {
+  getUserSearch(searchPhone, state) async {
+    await HttpUtlis.get('third/user/search?mobile=$searchPhone',
+        success: (value) {
+      if (value['errno'] == 0) {
+        state(() {
+          listUser = value['data'];
+        });
+      }
+    }, failure: (error) {
+      Toast.show('$error', context,
+          backgroundColor: Color(0xff5b5956),
+          backgroundRadius: Ui.width(16),
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.CENTER);
+    });
+  }
+transfer(id,userId,state)async{
+  await HttpUtlis.post("/third/coupon/transfer", params: {
+      'id': id,
+      'userId':userId
+    }, success: (val) async {
+      if (val['errno'] == 0) {
+        Unit.setToast('转发成功～', context);
+        state(() {
+         list = [];
+          nolist = true;
+          isMore = true;
+          page = 1;
+        });
+        getData();
+        Navigator.pop(context, true);
+      }
+    }, failure: (error) {
+      Toast.show('${error}', context,
+          backgroundColor: Color(0xff5b5956),
+          backgroundRadius: Ui.width(16),
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.CENTER);
+    });
+}
+  showDialogForRoll(id) {
     showDialog(
         context: context,
         barrierDismissible: true,
         builder: (context) {
           return StatefulBuilder(
             builder: (context, state) {
-
-              getUserSearch(searchPhone) async {
-                await HttpUtlis.get('third/user/search?mobile=$searchPhone',
-                    success: (value) {
-                      print(value);
-                      if (value['errno'] == 0) {
-                        state(() {
-                          userMobile = value['data'][0]['mobile'];
-                          userName = value['data'][0]['name'];
-                        });
-                      }
-                    }, failure: (error) {
-                      Toast.show('$error', context,
-                          backgroundColor: Color(0xff5b5956),
-                          backgroundRadius: Ui.width(16),
-                          duration: Toast.LENGTH_SHORT,
-                          gravity: Toast.CENTER);
-                    });
-              }
-
-              return Scaffold(
-                  backgroundColor: Colors.transparent,
-                  body: Center(
+              return SimpleDialog(
+                children: <Widget>[
+                  Center(
                     child: Container(
                         width: Ui.width(600),
-                        height: Ui.width(500),
+                        height: Ui.width(600),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius:
@@ -159,6 +180,8 @@ class _RollbagState extends State<Rollbag> {
                                     height: Ui.width(40),
                                   ),
                                   Container(
+                                    width: Ui.width(600),
+                                    height: Ui.width(80),
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 20),
                                     child: Container(
@@ -169,6 +192,7 @@ class _RollbagState extends State<Rollbag> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(4.0))),
                                       child: TextField(
+                                        keyboardAppearance: Brightness.light,
                                         maxLines: 1,
                                         keyboardType: TextInputType.phone,
                                         textInputAction: TextInputAction.done,
@@ -181,11 +205,12 @@ class _RollbagState extends State<Rollbag> {
                                               borderSide: BorderSide.none),
                                         ),
                                         onChanged: (value) {
-                                          if (_initKeywordsController
-                                                  .text.length ==
-                                              11) {
-                                            getUserSearch(value);
-                                          }
+                                          // if (_initKeywordsController.text.length ==11) {
+                                          getUserSearch(value, state);
+                                          state(() {
+                                            active = null;
+                                          });
+                                          // }
                                         },
                                       ),
                                     ),
@@ -194,70 +219,129 @@ class _RollbagState extends State<Rollbag> {
                                     height: Ui.width(40),
                                   ),
                                   Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 20),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Container(
-                                          margin: EdgeInsets.fromLTRB(
-                                              0, 0, Ui.width(30), 0),
-                                          child: Text(
-                                            '$userName',
-                                            style: TextStyle(
-                                                color: Color(0xFF111F37),
-                                                fontWeight: FontWeight.w400,
-                                                fontFamily:
-                                                    'PingFangSC-Medium,PingFang SC',
-                                                fontSize:
-                                                    Ui.setFontSizeSetSp(26.0)),
-                                          ),
-
-                                        ),
-                                        Text(
-                                          '$userMobile',
-                                          style: TextStyle(
-                                              color: Color(0xFF111F37),
-                                              fontWeight: FontWeight.w400,
-                                              fontFamily:
-                                                  'PingFangSC-Medium,PingFang SC',
-                                              fontSize:
-                                                  Ui.setFontSizeSetSp(26.0)),
-                                        )
-                                      ],
-                                    ),
-                                  ),
+                                      height: Ui.width(200),
+                                      width: Ui.width(600),
+                                      padding: EdgeInsets.fromLTRB(
+                                          Ui.width(30), 0, Ui.width(30), 0),
+                                      child: ListView.builder(
+                                        itemCount: listUser.length,
+                                        itemBuilder: (context, index) {
+                                          return GestureDetector(
+                                            onTap: () async {
+                                              state(() {
+                                                active = index;
+                                              });
+                                            },
+                                            child: Container(
+                                              height: Ui.width(80),
+                                              decoration: BoxDecoration(
+                                                color: active == index
+                                                    ? Color(0xFF5BBEFF)
+                                                    : Color(0xFFFFFFFF),
+                                                border: Border(
+                                                  bottom: BorderSide(
+                                                      color: Color(0XFFF1F1F1),
+                                                      width: 1.0),
+                                                ),
+                                              ),
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 20),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    Container(
+                                                      margin:
+                                                          EdgeInsets.fromLTRB(
+                                                              0,
+                                                              0,
+                                                              Ui.width(30),
+                                                              0),
+                                                      child: Text(
+                                                        listUser[index]
+                                                                    ['name'] ==
+                                                                null
+                                                            ? '手机用户'
+                                                            : '${listUser[index]['name']}',
+                                                        style: TextStyle(
+                                                            color: active == index
+                                                    ? Color(0xFFFFFFFF)
+                                                    :Color(0xFF111F37),
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            fontFamily:
+                                                                'PingFangSC-Medium,PingFang SC',
+                                                            fontSize: Ui
+                                                                .setFontSizeSetSp(
+                                                                    30.0)),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      '${listUser[index]['mobile']}',
+                                                      style: TextStyle(
+                                                           color: active == index
+                                                    ? Color(0xFFFFFFFF)
+                                                    :Color(0xFF111F37),
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          fontFamily:
+                                                              'PingFangSC-Medium,PingFang SC',
+                                                          fontSize: Ui
+                                                              .setFontSizeSetSp(
+                                                                  30.0)),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      )),
                                   SizedBox(
                                     height: Ui.width(40),
                                   ),
-                                  Container(
-                                    width: Ui.width(450),
-                                    height: Ui.width(80),
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFF33AAF5),
-                                      borderRadius: new BorderRadius.all(
-                                          new Radius.circular(Ui.width(6.0))),
+                                  GestureDetector(
+                                    onTap: () async {
+                                      if(active==null){
+                                        Unit.setToast('请选择用户~', context);
+                                            return;
+                                      }else{
+                                       transfer(id,listUser[active]['id'],state);
+                                      }
+                                    },
+                                    child: Container(
+                                      width: Ui.width(450),
+                                      height: Ui.width(80),
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFF33AAF5),
+                                        borderRadius: new BorderRadius.all(
+                                            new Radius.circular(Ui.width(6.0))),
+                                      ),
+                                      child: Text(
+                                        '确认转发',
+                                        style: TextStyle(
+                                            color: Color(0xFFFFFFFF),
+                                            fontWeight: FontWeight.w400,
+                                            fontFamily:
+                                                'PingFangSC-Medium,PingFang SC',
+                                            fontSize:
+                                                Ui.setFontSizeSetSp(28.0)),
+                                      ),
                                     ),
-                                    child: Text(
-                                      '确认转发',
-                                      style: TextStyle(
-                                          color: Color(0xFFFFFFFF),
-                                          fontWeight: FontWeight.w400,
-                                          fontFamily:
-                                              'PingFangSC-Medium,PingFang SC',
-                                          fontSize: Ui.setFontSizeSetSp(28.0)),
-                                    ),
-                                  ),
+                                  )
                                 ],
                               ),
                             ),
                           ],
                         )),
-                  ));
+                  )
+                ],
+              );
             },
           );
         });
@@ -661,7 +745,12 @@ class _RollbagState extends State<Rollbag> {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      showDialogForRoll();
+                                      setState(() {
+                                        listUser=[];
+                                        _initKeywordsController.clear();
+                                      });
+                                      showDialogForRoll(
+                                          list[index]['couponUserId']);
                                     },
                                     child: Container(
                                       width: Ui.width(750),
