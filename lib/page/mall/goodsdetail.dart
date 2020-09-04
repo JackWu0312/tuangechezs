@@ -16,10 +16,13 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:fluwx/fluwx.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import '../../common/CommonBottomSheet.dart';
+
 // import 'package:toast/toast.dart';
 class Goodsdetail extends StatefulWidget {
   final Map arguments;
+
   Goodsdetail({Key key, this.arguments}) : super(key: key);
+
   @override
   _GoodsdetailState createState() => _GoodsdetailState();
 }
@@ -32,11 +35,11 @@ class _GoodsdetailState extends State<Goodsdetail>
   String nums = '1';
   List listAllimage = [];
   List list = [];
-  int  points = 0;
+  int points = 0;
   double retailPrice = 0;
   int style = 1; //1 ios 2安卓
   var data;
- StreamSubscription<WeChatShareResponse> _wxlogin;
+  StreamSubscription<WeChatShareResponse> _wxlogin;
 
   @override
   void initState() {
@@ -53,12 +56,14 @@ class _GoodsdetailState extends State<Goodsdetail>
     _wxlogin = fluwx.responseFromShare.listen((data) {
       if (data.errCode == 0) {
         print('分享成功！');
-         getShare();
+        getShare();
       }
     });
   }
-   getShare() {
-    HttpUtlis.post("wx/share/callback", params: {'dataId':widget.arguments['id'],'type': 2, 'platform': 1},
+
+  getShare() {
+    HttpUtlis.post("wx/share/callback",
+        params: {'dataId': widget.arguments['id'], 'type': 2, 'platform': 1},
         success: (value) async {
       if (value['errno'] == 0) {
         print('分享成功～');
@@ -90,13 +95,13 @@ class _GoodsdetailState extends State<Goodsdetail>
         nums = '1';
       });
     }
-    await HttpUtlis.post('wx/points/goods/calculate',
+    await HttpUtlis.post('third/points/goods/calculate',
         params: {'id': data['product']['id'], 'number': int.parse(nums)},
         success: (value) {
       if (value['errno'] == 0) {
         setBottomState(() {
           points = value['data']['points'];
-          retailPrice = value['data']['price'] ;
+          retailPrice = value['data']['price'];
         });
       }
     }, failure: (error) {
@@ -110,7 +115,7 @@ class _GoodsdetailState extends State<Goodsdetail>
 
   getData() async {
     print(widget.arguments['id']);
-    await HttpUtlis.get('wx/points/goods/${widget.arguments['id']}',
+    await HttpUtlis.get('third/points/goods/${widget.arguments['id']}',
         success: (value) {
       if (value['errno'] == 0) {
         setState(() {
@@ -238,14 +243,14 @@ class _GoodsdetailState extends State<Goodsdetail>
                                         fontFamily:
                                             'PingFangSC-Medium,PingFang SC',
                                         fontSize: Ui.setFontSizeSetSp(24.0))),
-                                TextSpan(
-                                    text: ' +${retailPrice}元',
-                                    style: TextStyle(
-                                        color: Color(0xFFD10123),
-                                        fontWeight: FontWeight.w400,
-                                        fontFamily:
-                                            'PingFangSC-Medium,PingFang SC',
-                                        fontSize: Ui.setFontSizeSetSp(28.0))),
+//                                TextSpan(
+//                                    text: ' +${retailPrice}元',
+//                                    style: TextStyle(
+//                                        color: Color(0xFFD10123),
+//                                        fontWeight: FontWeight.w400,
+//                                        fontFamily:
+//                                            'PingFangSC-Medium,PingFang SC',
+//                                        fontSize: Ui.setFontSizeSetSp(28.0))),
                               ],
                             ),
                           ),
@@ -619,11 +624,10 @@ class _GoodsdetailState extends State<Goodsdetail>
                                       height: double.infinity,
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.vertical(
-                                                      bottom: Radius.circular(
-                                                          Ui.width(20)))),
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.vertical(
+                                              bottom: Radius.circular(
+                                                  Ui.width(20)))),
                                       child: Text('取消',
                                           style: TextStyle(
                                               decoration: TextDecoration.none,
@@ -660,11 +664,10 @@ class _GoodsdetailState extends State<Goodsdetail>
                                         height: double.infinity,
                                         alignment: Alignment.center,
                                         decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.vertical(
-                                                      bottom: Radius.circular(
-                                                          Ui.width(20)))),
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.vertical(
+                                                bottom: Radius.circular(
+                                                    Ui.width(20)))),
                                         child: Text('去登陆',
                                             style: TextStyle(
                                                 decoration: TextDecoration.none,
@@ -702,93 +705,179 @@ class _GoodsdetailState extends State<Goodsdetail>
     Ui.init(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: Text(
-          '商品详情',
-          style: TextStyle(
-              color: Color(0xFF111F37),
-              fontWeight: FontWeight.w500,
-              fontFamily: 'PingFangSC-Medium,PingFang SC',
-              fontSize: Ui.setFontSizeSetSp(36.0)),
-        ),
-        centerTitle: true,
-        elevation: 0,
-        brightness: Brightness.light,
-        bottom: TabBar(
-          controller: _tabController,
-          unselectedLabelColor: Color(0xFF111F37),
-          labelColor: Color(0xFFD10123),
-          indicatorColor: Color(0xFFD10123),
-          indicatorPadding:
-              EdgeInsets.fromLTRB(Ui.width(145), 0, Ui.width(145), 0),
-          unselectedLabelStyle: new TextStyle(
-              fontWeight: FontWeight.w500,
-              fontFamily: 'PingFangSC-Medium,PingFang SC',
-              fontSize: Ui.setFontSizeSetSp(30.0)),
-          labelStyle: new TextStyle(
-              fontWeight: FontWeight.w500,
-              fontFamily: 'PingFangSC-Medium,PingFang SC',
-              fontSize: Ui.setFontSizeSetSp(30.0)),
-          tabs: <Widget>[
-            Tab(
-              text: '商品',
-            ),
-            Tab(
-              text: '详情',
-            ),
-          ],
-        ),
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
+      appBar: PreferredSize(
           child: Container(
-            alignment: Alignment.center,
-            child: Image.asset(
-              'images/2.0x/back.png',
-              width: Ui.width(21),
-              height: Ui.width(37),
-            ),
-          ),
-        ),
-        actions: <Widget>[
-          InkWell(
-              onTap: () async {
-                showDialog(
-                    barrierDismissible: true, //是否点击空白区域关闭对话框,默认为true，可以关闭
-                    context: context,
-                    builder: (BuildContext context) {
-                      var list = List();
-                      list.add('发送给微信好友');
-                      list.add('分享到微信朋友圈');
-                      return CommonBottomSheet(
-                        list: list,
-                        onItemClickListener: (index) async {
-                          var model = fluwx.WeChatShareWebPageModel(
-                              webPage:
-                                  '${Config.weblink}appgoodpoint/${widget.arguments['id']}',
-                              title: '${data['brand']['name']}',
-                              description: '${data['goods']['name']}',
-                              thumbnail: "assets://images/loginnew.png",
-                              scene: index == 0
-                                  ? fluwx.WeChatScene.SESSION
-                                  : fluwx.WeChatScene.TIMELINE,
-                              transaction: "hh");
-                          fluwx.shareToWeChat(model);
+              padding:
+                  new EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    Color(0xFF5BBEFF),
+                    Color(0xFF466EFF),
+                  ],
+                ),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    height: Ui.height(90),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [
+                          Color(0xFF5BBEFF),
+                          Color(0xFF466EFF),
+                        ],
+                      ),
+                    ),
+                    child: Stack(
+                      children: <Widget>[
+                        Positioned(
+                            left: Ui.width(30),
+                            top: Ui.width(30),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Image.asset(
+                                'images/2.0x/back.png',
+                                width: Ui.width(20),
+                                height: Ui.width(36),
+                              ),
+                            )),
+                        Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            '商品详情',
+                            style: TextStyle(
+                                color: Color(0XFFFFFFFF),
+                                fontSize: Ui.setFontSizeSetSp(36),
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'PingFangSC-Regular,PingFang SC'),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  TabBar(
+                    controller: _tabController,
+                    unselectedLabelColor: Color(0xFFffffff),
+                    labelColor: Color(0xFFD10123),
+                    indicatorColor: Color(0xFFD10123),
+                    indicatorPadding:
+                    EdgeInsets.fromLTRB(Ui.width(145), 0, Ui.width(145), 0),
+                    unselectedLabelStyle: new TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'PingFangSC-Medium,PingFang SC',
+                        fontSize: Ui.setFontSizeSetSp(30.0)),
+                    labelStyle: new TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'PingFangSC-Medium,PingFang SC',
+                        fontSize: Ui.setFontSizeSetSp(30.0)),
+                    tabs: <Widget>[
+                      Tab(
+                        text: '商品',
+                      ),
+                      Tab(
+                        text: '详情',
+                      ),
+                    ],
+                  ),
 
-                          Navigator.pop(context);
-                        },
-                      );
-                    });
-              },
-              child: Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.fromLTRB(0, 0, Ui.width(40), 0),
-                child: Image.asset('images/2.0x/share.png',
-                    width: Ui.width(42), height: Ui.width(42)),
-              ))
-        ],
+                ],
+              )),
+          preferredSize: Size(MediaQuery.of(context).size.width, Ui.width(210))
       ),
+//      AppBar(
+//        title: Text(
+//          '商品详情',
+//          style: TextStyle(
+//              color: Color(0xFF111F37),
+//              fontWeight: FontWeight.w500,
+//              fontFamily: 'PingFangSC-Medium,PingFang SC',
+//              fontSize: Ui.setFontSizeSetSp(36.0)),
+//        ),
+//        centerTitle: true,
+//        elevation: 0,
+//        brightness: Brightness.light,
+//        bottom: TabBar(
+//          controller: _tabController,
+//          unselectedLabelColor: Color(0xFF111F37),
+//          labelColor: Color(0xFFD10123),
+//          indicatorColor: Color(0xFFD10123),
+//          indicatorPadding:
+//              EdgeInsets.fromLTRB(Ui.width(145), 0, Ui.width(145), 0),
+//          unselectedLabelStyle: new TextStyle(
+//              fontWeight: FontWeight.w500,
+//              fontFamily: 'PingFangSC-Medium,PingFang SC',
+//              fontSize: Ui.setFontSizeSetSp(30.0)),
+//          labelStyle: new TextStyle(
+//              fontWeight: FontWeight.w500,
+//              fontFamily: 'PingFangSC-Medium,PingFang SC',
+//              fontSize: Ui.setFontSizeSetSp(30.0)),
+//          tabs: <Widget>[
+//            Tab(
+//              text: '商品',
+//            ),
+//            Tab(
+//              text: '详情',
+//            ),
+//          ],
+//        ),
+//        leading: InkWell(
+//          onTap: () {
+//            Navigator.pop(context);
+//          },
+//          child: Container(
+//            alignment: Alignment.center,
+//            child: Image.asset(
+//              'images/2.0x/back.png',
+//              width: Ui.width(21),
+//              height: Ui.width(37),
+//            ),
+//          ),
+//        ),
+//        actions: <Widget>[
+//          InkWell(
+//              onTap: () async {
+//                showDialog(
+//                    barrierDismissible: true, //是否点击空白区域关闭对话框,默认为true，可以关闭
+//                    context: context,
+//                    builder: (BuildContext context) {
+//                      var list = List();
+//                      list.add('发送给微信好友');
+//                      list.add('分享到微信朋友圈');
+//                      return CommonBottomSheet(
+//                        list: list,
+//                        onItemClickListener: (index) async {
+//                          var model = fluwx.WeChatShareWebPageModel(
+//                              webPage:
+//                                  '${Config.weblink}appgoodpoint/${widget.arguments['id']}',
+//                              title: '${data['brand']['name']}',
+//                              description: '${data['goods']['name']}',
+//                              thumbnail: "assets://images/loginnew.png",
+//                              scene: index == 0
+//                                  ? fluwx.WeChatScene.SESSION
+//                                  : fluwx.WeChatScene.TIMELINE,
+//                              transaction: "hh");
+//                          fluwx.shareToWeChat(model);
+//
+//                          Navigator.pop(context);
+//                        },
+//                      );
+//                    });
+//              },
+//              child: Container(
+//                alignment: Alignment.center,
+//                padding: EdgeInsets.fromLTRB(0, 0, Ui.width(40), 0),
+//                child: Image.asset('images/2.0x/share.png',
+//                    width: Ui.width(42), height: Ui.width(42)),
+//              ))
+//        ],
+//      ),
       body: isloading
           ? Stack(
               children: <Widget>[
@@ -808,19 +897,19 @@ class _GoodsdetailState extends State<Goodsdetail>
                                 child: Swiper(
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    return  CachedNetworkImage(
-                                                    width: Ui.width(750),
-                                                    fit: BoxFit.fill,
-                                                    imageUrl:
-                                                         '${listAllimage[index]}');
-                                    
+                                    return CachedNetworkImage(
+                                        width: Ui.width(750),
+                                        fit: BoxFit.fill,
+                                        imageUrl: '${listAllimage[index]}');
+
                                     // new Image.network(
                                     //   '${listAllimage[index]}',
                                     //   fit: BoxFit.fill,
                                     // );
                                   },
                                   itemCount: listAllimage.length,
-                                  autoplay: listAllimage.length>1?true:false,
+                                  autoplay:
+                                      listAllimage.length > 1 ? true : false,
                                 )),
                           ),
                           Container(
@@ -876,16 +965,16 @@ class _GoodsdetailState extends State<Goodsdetail>
                                                       'PingFangSC-Medium,PingFang SC',
                                                   fontSize: Ui.setFontSizeSetSp(
                                                       24.0))),
-                                          TextSpan(
-                                              text:
-                                                  ' +${data['goods']['retailPrice']}元',
-                                              style: TextStyle(
-                                                  color: Color(0xFFD10123),
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily:
-                                                      'PingFangSC-Medium,PingFang SC',
-                                                  fontSize: Ui.setFontSizeSetSp(
-                                                      28.0))),
+//                                          TextSpan(
+//                                              text:
+//                                                  ' +${data['goods']['retailPrice']}元',
+//                                              style: TextStyle(
+//                                                  color: Color(0xFFD10123),
+//                                                  fontWeight: FontWeight.w400,
+//                                                  fontFamily:
+//                                                      'PingFangSC-Medium,PingFang SC',
+//                                                  fontSize: Ui.setFontSizeSetSp(
+//                                                      28.0))),
                                         ],
                                       ),
                                     ),
@@ -1030,7 +1119,7 @@ class _GoodsdetailState extends State<Goodsdetail>
                                           flex: 1,
                                           child: Container(
                                             child: Text(
-                                              '${data['goods']['points']}积分+${data['goods']['retailPrice']}元',
+                                              '${data['goods']['points']}积分',
                                               style: TextStyle(
                                                   color: Color(0xFF111F37),
                                                   fontWeight: FontWeight.w400,

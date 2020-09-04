@@ -22,6 +22,7 @@ class _ExchangeState extends State<Exchange> {
   int page = 1;
   int size = 10;
   bool isNolist = false;
+
   // List lists = [];
   @override
   void initState() {
@@ -37,7 +38,7 @@ class _ExchangeState extends State<Exchange> {
       });
     }
     await HttpUtlis.get(
-        'wx/points/orders?type=2&page=${this.page}&limit=${this.size}',
+        'third/points/orders?&page=${this.page}&limit=${this.size}',
         success: (value) {
       print(value);
       if (value['errno'] == 0) {
@@ -71,28 +72,63 @@ class _ExchangeState extends State<Exchange> {
   Widget build(BuildContext context) {
     Ui.init(context);
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            '兑换记录',
-            style: TextStyle(
-                color: Color(0xFF111F37),
-                fontWeight: FontWeight.w500,
-                fontFamily: 'PingFangSC-Medium,PingFang SC',
-                fontSize: Ui.setFontSizeSetSp(36.0)),
-          ),
-          centerTitle: true,
-          elevation: 0,
-          brightness: Brightness.light,
-          leading: InkWell(
-            onTap: (){
-               Navigator.pop(context);
-            },
+        appBar: PreferredSize(
             child: Container(
-              alignment: Alignment.center,
-              child: Image.asset('images/2.0x/back.png',width: Ui.width(21),height: Ui.width(37),),
-            ),
-          ),
-        ),
+                padding: new EdgeInsets.only(
+                    top: MediaQuery.of(context).padding.top),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
+                      Color(0xFF5BBEFF),
+                      Color(0xFF466EFF),
+                    ],
+                  ),
+                ),
+                child: Container(
+                  height: Ui.height(90),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [
+                        Color(0xFF5BBEFF),
+                        Color(0xFF466EFF),
+                      ],
+                    ),
+                  ),
+                  child: Stack(
+                    children: <Widget>[
+                      Positioned(
+                          left: Ui.width(30),
+                          top: Ui.width(30),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Image.asset(
+                              'images/2.0x/back.png',
+                              width: Ui.width(20),
+                              height: Ui.width(36),
+                            ),
+                          )),
+                      Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          '兑换记录',
+                          style: TextStyle(
+                              color: Color(0XFFFFFFFF),
+                              fontSize: Ui.setFontSizeSetSp(36),
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'PingFangSC-Regular,PingFang SC'),
+                        ),
+                      )
+                    ],
+                  ),
+                )),
+            preferredSize:
+                Size(MediaQuery.of(context).size.width, Ui.width(90))),
         body: isloading
             ? list.length > 0
                 ? EasyRefresh(
@@ -154,22 +190,22 @@ class _ExchangeState extends State<Exchange> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
                                 Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      0, 0, Ui.width(30), 0),
-                                  width: Ui.width(180),
-                                  child: CachedNetworkImage(
-                                                    width: Ui.width(180),
-                                                    height:Ui.width(180),
-                                                    fit: BoxFit.fill,
-                                                    imageUrl:
-                                                        '${list[index]["picUrl"]}')
-                                  
-                                  // AspectRatio(
-                                  //   aspectRatio: 1 / 1,
-                                  //   child: Image.network(
-                                  //       '${list[index]["picUrl"]}'),
-                                  // ),
-                                ),
+                                    margin: EdgeInsets.fromLTRB(
+                                        0, 0, Ui.width(30), 0),
+                                    width: Ui.width(180),
+                                    child: CachedNetworkImage(
+                                        width: Ui.width(180),
+                                        height: Ui.width(180),
+                                        fit: BoxFit.fill,
+                                        imageUrl:
+                                            '${list[index]["goods"]["picUrl"]}')
+
+                                    // AspectRatio(
+                                    //   aspectRatio: 1 / 1,
+                                    //   child: Image.network(
+                                    //       '${list[index]["picUrl"]}'),
+                                    // ),
+                                    ),
                                 Expanded(
                                   flex: 1,
                                   child: Column(
@@ -185,7 +221,7 @@ class _ExchangeState extends State<Exchange> {
                                               MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             Text(
-                                              '${list[index]["brandName"]}',
+                                              '${list[index]["goods"]["goodsName"]}',
                                               style: TextStyle(
                                                   color: Color(0xFF111F37),
                                                   fontWeight: FontWeight.w500,
@@ -199,7 +235,7 @@ class _ExchangeState extends State<Exchange> {
                                                 height: Ui.width(46),
                                                 alignment: Alignment.center,
                                                 child: Text(
-                                                  '${list[index]["date"]}',
+                                                  '${list[index]["order"]["payTime"].toString().substring(0, 10)}',
                                                   style: TextStyle(
                                                       color: Color(0xFF9398A5),
                                                       fontWeight:
@@ -220,23 +256,23 @@ class _ExchangeState extends State<Exchange> {
                                           ],
                                         ),
                                       ),
-                                      Container(
-                                        // margin: EdgeInsets.fromLTRB(0, 0, 0, Ui.width(-12)),
-                                        child: Text(
-                                          '${list[index]['goodsName']}',
-                                          style: TextStyle(
-                                              color: Color(0xFF111F37),
-                                              fontWeight: FontWeight.w400,
-                                              fontFamily:
-                                                  'PingFangSC-Medium,PingFang SC',
-                                              fontSize:
-                                                  Ui.setFontSizeSetSp(28.0)),
-                                        ),
-                                      ),
+//                                      Container(
+//                                        // margin: EdgeInsets.fromLTRB(0, 0, 0, Ui.width(-12)),
+//                                        child: Text(
+//                                          '${list[index]["goods"]['goodsName']}',
+//                                          style: TextStyle(
+//                                              color: Color(0xFF111F37),
+//                                              fontWeight: FontWeight.w400,
+//                                              fontFamily:
+//                                                  'PingFangSC-Medium,PingFang SC',
+//                                              fontSize:
+//                                                  Ui.setFontSizeSetSp(28.0)),
+//                                        ),
+//                                      ),
                                       Container(
                                         // margin: EdgeInsets.fromLTRB(0, Ui.width(35), 0, 0),
                                         child: Text(
-                                          '${list[index]["totalPoints"]}积分+${list[index]["totalPrice"]}元',
+                                          '${list[index]["order"]["integralPrice"]}积分',
                                           style: TextStyle(
                                               color: Color(0xFFD10123),
                                               fontWeight: FontWeight.w400,

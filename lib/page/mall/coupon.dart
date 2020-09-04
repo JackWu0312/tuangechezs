@@ -1,30 +1,23 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../common/Unit.dart';
 import '../../ui/ui.dart';
 import '../../http/index.dart';
 import 'package:toast/toast.dart';
 import '../../common/LoadingDialog.dart';
 import '../../common/Nofind.dart';
 
-class Rollbag extends StatefulWidget {
-  Rollbag({Key key}) : super(key: key);
+class Coupon extends StatefulWidget {
+  Coupon({Key key}) : super(key: key);
 
   @override
-  _RollbagState createState() => _RollbagState();
+  _CouponState createState() => _CouponState();
 }
 
-class _RollbagState extends State<Rollbag> {
+class _CouponState extends State<Coupon> {
   ScrollController _scrollController = new ScrollController();
-  var _initKeywordsController = new TextEditingController();
-  var islogin = false;
-  bool isShow = false;
 
+  @override
   void initState() {
     super.initState();
-    getstyle();
     getData();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >
@@ -39,18 +32,19 @@ class _RollbagState extends State<Rollbag> {
     });
   }
 
-  List list = [];
   bool nolist = true;
   bool isMore = true;
   int page = 1;
   int limit = 10;
-
+  List list = [];
+  var islogin = false;
   getData() async {
     if (isMore) {
-      await HttpUtlis.get('third/coupon/mine?page=${page}&limit=${limit}',
+      await HttpUtlis.get('third/coupon/list?&page=${page}&limit=${limit}',
           success: (value) {
         if (value['errno'] == 0) {
           var listdata = value['data']['list'];
+          // print(listdata);
           for (var i = 0, len = listdata.length; i < len; i++) {
             listdata[i]['select'] = false;
           }
@@ -67,13 +61,16 @@ class _RollbagState extends State<Rollbag> {
               this.isMore = true;
               list.addAll(listdata);
             });
+            // setState(() {
+            //   list = listdata;
+            // });
           }
+          setState(() {
+            islogin = true;
+          });
         }
-        setState(() {
-          islogin = true;
-        });
       }, failure: (error) {
-        Toast.show('$error', context,
+        Toast.show('${error}', context,
             backgroundColor: Color(0xff5b5956),
             backgroundRadius: Ui.width(16),
             duration: Toast.LENGTH_SHORT,
@@ -82,55 +79,15 @@ class _RollbagState extends State<Rollbag> {
     }
   }
 
-  var style = 1;
-  // var userMobile = '';
-  // var userName = '';
-  var listUser = [];
-  var active = null;
-
-  getstyle() {
-    if (Platform.isIOS) {
-      setState(() {
-        style = 1;
-      });
-    } else if (Platform.isAndroid) {
-      setState(() {
-        style = 2;
-      });
-    }
-  }
-
-  getUserSearch(searchPhone, state) async {
-    await HttpUtlis.get('third/user/search?mobile=$searchPhone',
-        success: (value) {
+  getreceive(id) async {
+    await HttpUtlis.get("third/coupon/receive/$id",
+        success: (value) async {
       if (value['errno'] == 0) {
-        state(() {
-          listUser = value['data'];
-        });
-      }
-    }, failure: (error) {
-      Toast.show('$error', context,
-          backgroundColor: Color(0xff5b5956),
-          backgroundRadius: Ui.width(16),
-          duration: Toast.LENGTH_SHORT,
-          gravity: Toast.CENTER);
-    });
-  }
-transfer(id,userId,state)async{
-  await HttpUtlis.post("/third/coupon/transfer", params: {
-      'id': id,
-      'userId':userId
-    }, success: (val) async {
-      if (val['errno'] == 0) {
-        Unit.setToast('转发成功～', context);
-        state(() {
-         list = [];
-          nolist = true;
-          isMore = true;
-          page = 1;
-        });
-        getData();
-        Navigator.pop(context, true);
+        Toast.show('领取成功', context,
+            backgroundColor: Color(0xff5b5956),
+            backgroundRadius: Ui.width(16),
+            duration: Toast.LENGTH_SHORT,
+            gravity: Toast.CENTER);
       }
     }, failure: (error) {
       Toast.show('${error}', context,
@@ -139,225 +96,11 @@ transfer(id,userId,state)async{
           duration: Toast.LENGTH_SHORT,
           gravity: Toast.CENTER);
     });
-}
-  showDialogForRoll(id) {
-    showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (context) {
-          return StatefulBuilder(
-            builder: (context, state) {
-              return SimpleDialog(
-                children: <Widget>[
-                  Center(
-                    child: Container(
-                        width: Ui.width(600),
-                        height: Ui.width(600),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(Ui.width(20.0))),
-                        ),
-                        child: Stack(
-                          children: <Widget>[
-                            Container(
-                              width: Ui.width(600),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  SizedBox(
-                                    height: Ui.width(30),
-                                  ),
-                                  Text('搜索朋友',
-                                      style: TextStyle(
-                                          decoration: TextDecoration.none,
-                                          color: Color(0xFF111F37),
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily:
-                                              'PingFangSC-Medium,PingFang SC',
-                                          fontSize: Ui.setFontSizeSetSp(36.0))),
-                                  SizedBox(
-                                    height: Ui.width(40),
-                                  ),
-                                  Container(
-                                    width: Ui.width(600),
-                                    height: Ui.width(80),
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 20),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Color(0xFFEEEEEE),
-                                              width: 0.5),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(4.0))),
-                                      child: TextField(
-                                        keyboardAppearance: Brightness.light,
-                                        maxLines: 1,
-                                        keyboardType: TextInputType.phone,
-                                        textInputAction: TextInputAction.done,
-                                        controller: _initKeywordsController,
-                                        decoration: InputDecoration(
-                                          contentPadding:
-                                              const EdgeInsets.all(6),
-                                          hintText: '请输入手机号',
-                                          border: OutlineInputBorder(
-                                              borderSide: BorderSide.none),
-                                        ),
-                                        onChanged: (value) {
-                                          // if (_initKeywordsController.text.length ==11) {
-                                          getUserSearch(value, state);
-                                          state(() {
-                                            active = null;
-                                          });
-                                          // }
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: Ui.width(40),
-                                  ),
-                                  Container(
-                                      height: Ui.width(200),
-                                      width: Ui.width(600),
-                                      padding: EdgeInsets.fromLTRB(
-                                          Ui.width(30), 0, Ui.width(30), 0),
-                                      child: ListView.builder(
-                                        itemCount: listUser.length,
-                                        itemBuilder: (context, index) {
-                                          return GestureDetector(
-                                            onTap: () async {
-                                              state(() {
-                                                active = index;
-                                              });
-                                            },
-                                            child: Container(
-                                              height: Ui.width(80),
-                                              decoration: BoxDecoration(
-                                                color: active == index
-                                                    ? Color(0xFF5BBEFF)
-                                                    : Color(0xFFFFFFFF),
-                                                border: Border(
-                                                  bottom: BorderSide(
-                                                      color: Color(0XFFF1F1F1),
-                                                      width: 1.0),
-                                                ),
-                                              ),
-                                              child: Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 20),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: <Widget>[
-                                                    Container(
-                                                      margin:
-                                                          EdgeInsets.fromLTRB(
-                                                              0,
-                                                              0,
-                                                              Ui.width(30),
-                                                              0),
-                                                      child: Text(
-                                                        listUser[index]
-                                                                    ['name'] ==
-                                                                null
-                                                            ? '手机用户'
-                                                            : '${listUser[index]['name']}',
-                                                        style: TextStyle(
-                                                            color: active == index
-                                                    ? Color(0xFFFFFFFF)
-                                                    :Color(0xFF111F37),
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            fontFamily:
-                                                                'PingFangSC-Medium,PingFang SC',
-                                                            fontSize: Ui
-                                                                .setFontSizeSetSp(
-                                                                    30.0)),
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      '${listUser[index]['mobile']}',
-                                                      style: TextStyle(
-                                                           color: active == index
-                                                    ? Color(0xFFFFFFFF)
-                                                    :Color(0xFF111F37),
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontFamily:
-                                                              'PingFangSC-Medium,PingFang SC',
-                                                          fontSize: Ui
-                                                              .setFontSizeSetSp(
-                                                                  30.0)),
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      )),
-                                  SizedBox(
-                                    height: Ui.width(40),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () async {
-                                      if(active==null){
-                                        Unit.setToast('请选择用户~', context);
-                                            return;
-                                      }else{
-                                       transfer(id,listUser[active]['id'],state);
-                                      }
-                                    },
-                                    child: Container(
-                                      width: Ui.width(450),
-                                      height: Ui.width(80),
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFF33AAF5),
-                                        borderRadius: new BorderRadius.all(
-                                            new Radius.circular(Ui.width(6.0))),
-                                      ),
-                                      child: Text(
-                                        '确认转发',
-                                        style: TextStyle(
-                                            color: Color(0xFFFFFFFF),
-                                            fontWeight: FontWeight.w400,
-                                            fontFamily:
-                                                'PingFangSC-Medium,PingFang SC',
-                                            fontSize:
-                                                Ui.setFontSizeSetSp(28.0)),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        )),
-                  )
-                ],
-              );
-            },
-          );
-        });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _initKeywordsController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-//    final counter = Provider.of<Backhome>(context);
     Ui.init(context);
-
     return Scaffold(
         appBar: PreferredSize(
             child: Container(
@@ -403,7 +146,7 @@ transfer(id,userId,state)async{
                       Container(
                         alignment: Alignment.center,
                         child: Text(
-                          '券包',
+                          '领券中心',
                           style: TextStyle(
                               color: Color(0XFFFFFFFF),
                               fontSize: Ui.setFontSizeSetSp(36),
@@ -415,7 +158,7 @@ transfer(id,userId,state)async{
                   ),
                 )),
             preferredSize:
-                Size(MediaQuery.of(context).size.width, Ui.width(90))),
+            Size(MediaQuery.of(context).size.width, Ui.width(90))),
         body: islogin
             ? Container(
                 color: Color(0xFFF8F9FB),
@@ -462,7 +205,7 @@ transfer(id,userId,state)async{
                                                       CrossAxisAlignment.start,
                                                   children: <Widget>[
                                                     Text(
-                                                      '${list[index]['coupon']['name']}',
+                                                      '${list[index]['name']}',
                                                       style: TextStyle(
                                                           color:
                                                               Color(0xFF111F37),
@@ -478,7 +221,7 @@ transfer(id,userId,state)async{
                                                       height: Ui.width(12),
                                                     ),
                                                     Text(
-                                                      '${list[index]['coupon']['tag']}',
+                                                      '${list[index]['tag']}',
                                                       style: TextStyle(
                                                           color:
                                                               Color(0xFF9398A5),
@@ -501,7 +244,10 @@ transfer(id,userId,state)async{
                                                       CrossAxisAlignment.center,
                                                   children: <Widget>[
                                                     Text(
-                                                      '${list[index]['startTime']}-${list[index]['endTime']}',
+                                                      list[index]['startDate'] !=
+                                                              null
+                                                          ? '${list[index]['startDate']}-${list[index]['endDate']}'
+                                                          : '自领取之日起${list[index]['days']}天内有效',
                                                       style: TextStyle(
                                                           color:
                                                               Color(0xFF9398A5),
@@ -623,7 +369,7 @@ transfer(id,userId,state)async{
                                                                     36.0)),
                                                       ),
                                                       Text(
-                                                        '${list[index]['coupon']['discount']}',
+                                                        '${list[index]['discount']}',
                                                         style: TextStyle(
                                                             color: Color(
                                                                 0xFF8F541B),
@@ -663,10 +409,8 @@ transfer(id,userId,state)async{
                                                   left: Ui.width(45),
                                                   child: InkWell(
                                                     onTap: () {
-//                                                      counter.increment(1);
-                                                      Navigator.popAndPushNamed(
-                                                          context, '/');
-                                                      // getreceive(list[index]['id']);
+                                                      getreceive(
+                                                          list[index]['id']);
                                                     },
                                                     child: Container(
                                                       width: Ui.width(140),
@@ -675,7 +419,7 @@ transfer(id,userId,state)async{
                                                       alignment:
                                                           Alignment.center,
                                                       child: Text(
-                                                        '立即使用',
+                                                        '立即领取',
                                                         maxLines: 1,
                                                         overflow: TextOverflow
                                                             .ellipsis,
@@ -728,7 +472,7 @@ transfer(id,userId,state)async{
                                                   CrossAxisAlignment.start,
                                               children: <Widget>[
                                                 Text(
-                                                  '${list[index]['coupon']['desc']}',
+                                                  '${list[index]['desc']}',
                                                   style: TextStyle(
                                                       color: Color(0xFF111F37),
                                                       fontWeight:
@@ -743,39 +487,6 @@ transfer(id,userId,state)async{
                                             ),
                                           )
                                         : Container(),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        listUser=[];
-                                        _initKeywordsController.clear();
-                                      });
-                                      showDialogForRoll(
-                                          list[index]['couponUserId']);
-                                    },
-                                    child: Container(
-                                      width: Ui.width(750),
-                                      height: Ui.height(80),
-                                      padding: EdgeInsets.fromLTRB(
-                                          Ui.width(24),
-                                          Ui.width(20),
-                                          Ui.width(24),
-                                          Ui.width(20)),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          Text('转发给朋友'),
-                                          Image.asset(
-                                            'images/2.0x/rightmore.png',
-                                            width: Ui.width(15),
-                                            height: Ui.height(28),
-                                          )
-                                        ],
-                                      ),
-                                    ),
                                   )
                                 ],
                               ));

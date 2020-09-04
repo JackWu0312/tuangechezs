@@ -26,8 +26,8 @@ class _IndexPagesState extends State<IndexPages> {
           index: _currentIndex,
           children: <Widget>[
            Home(),
-           Mall(),
            Order(),
+            Mall(),
            My()
           ],
         ),
@@ -60,19 +60,6 @@ class _IndexPagesState extends State<IndexPages> {
             ),
             BottomNavigationBarItem(
               icon: Image.asset(
-                'images/2.0x/extension.png',
-                width: Ui.width(65.0),
-                height: Ui.width(55.0),
-              ),
-              activeIcon: Image.asset(
-                'images/2.0x/extensionselect.png',
-                width: Ui.width(65.0),
-                height: Ui.width(55.0),
-              ),
-              title: Text("兑换"),
-            ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
                 'images/2.0x/order.png',
                 width: Ui.width(65.0),
                 height: Ui.width(55.0),
@@ -83,6 +70,19 @@ class _IndexPagesState extends State<IndexPages> {
                 height: Ui.width(55.0),
               ),
               title: Text("订单"),
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                'images/2.0x/mall.png',
+                width: Ui.width(65.0),
+                height: Ui.width(55.0),
+              ),
+              activeIcon: Image.asset(
+                'images/2.0x/mall_select.png',
+                width: Ui.width(65.0),
+                height: Ui.width(55.0),
+              ),
+              title: Text("兑换"),
             ),
             BottomNavigationBarItem(
                 icon: Image.asset(

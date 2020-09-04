@@ -36,7 +36,7 @@ class _OrdercomState extends State<Ordercom> {
 
   calculate(id) async {
     print(int.parse(widget.arguments['num']));
-    await HttpUtlis.post('wx/points/goods/calculate',
+    await HttpUtlis.post('third/points/goods/calculate',
         params: {'id': id, 'number': int.parse(widget.arguments['num'])},
         success: (value) {
       if (value['errno'] == 0) {
@@ -56,7 +56,7 @@ class _OrdercomState extends State<Ordercom> {
   }
 
   getData() async {
-    await HttpUtlis.get('wx/points/goods/${widget.arguments['id']}',
+    await HttpUtlis.get('third/points/goods/${widget.arguments['id']}',
         success: (value) {
       if (value['errno'] == 0) {
         //  print(value['data']);
@@ -79,7 +79,7 @@ class _OrdercomState extends State<Ordercom> {
   }
 
   getAdress() async {
-    await HttpUtlis.get('wx/address/default', success: (value) {
+    await HttpUtlis.get('third/address/default', success: (value) {
       if (value['errno'] == 0) {
         setState(() {
           adress = value['data'];
@@ -107,7 +107,7 @@ class _OrdercomState extends State<Ordercom> {
       return;
     }
 
-    await HttpUtlis.post('wx/points/submit', params: {
+    await HttpUtlis.post('third/points/order/submit', params: {
       'goodsId': item['goods']['id'],
       'addressId': adress['id'],
       'number': int.parse(widget.arguments['num']),
@@ -145,32 +145,63 @@ class _OrdercomState extends State<Ordercom> {
           },
          child: Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: Text(
-          '订单填写',
-          style: TextStyle(
-              color: Color(0xFF111F37),
-              fontWeight: FontWeight.w500,
-              fontFamily: 'PingFangSC-Medium,PingFang SC',
-              fontSize: Ui.setFontSizeSetSp(36.0)),
-        ),
-        centerTitle: true,
-        elevation: 0,
-        brightness: Brightness.light,
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
+      appBar: PreferredSize(
           child: Container(
-            alignment: Alignment.center,
-            child: Image.asset(
-              'images/2.0x/back.png',
-              width: Ui.width(21),
-              height: Ui.width(37),
-            ),
-          ),
-        ),
-      ),
+              padding: new EdgeInsets.only(
+                  top: MediaQuery.of(context).padding.top),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    Color(0xFF5BBEFF),
+                    Color(0xFF466EFF),
+                  ],
+                ),
+              ),
+              child: Container(
+                height: Ui.height(90),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
+                      Color(0xFF5BBEFF),
+                      Color(0xFF466EFF),
+                    ],
+                  ),
+                ),
+                child: Stack(
+                  children: <Widget>[
+                    Positioned(
+                        left: Ui.width(30),
+                        top: Ui.width(30),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Image.asset(
+                            'images/2.0x/back.png',
+                            width: Ui.width(20),
+                            height: Ui.width(36),
+                          ),
+                        )),
+                    Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        '订单填写',
+                        style: TextStyle(
+                            color: Color(0XFFFFFFFF),
+                            fontSize: Ui.setFontSizeSetSp(36),
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'PingFangSC-Regular,PingFang SC'),
+                      ),
+                    )
+                  ],
+                ),
+              )),
+          preferredSize:
+          Size(MediaQuery.of(context).size.width, Ui.width(90))),
       body: Stack(
         children: <Widget>[
           Container(
@@ -374,31 +405,31 @@ class _OrdercomState extends State<Ordercom> {
                                                           fontSize: Ui
                                                               .setFontSizeSetSp(
                                                                   24.0))),
-                                                  TextSpan(
-                                                      text:
-                                                          '+${item['goods']['retailPrice']}',
-                                                      style: TextStyle(
-                                                          color:
-                                                              Color(0xFFD10123),
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontFamily:
-                                                              'PingFangSC-Medium,PingFang SC',
-                                                          fontSize: Ui
-                                                              .setFontSizeSetSp(
-                                                                  34.0))),
-                                                  TextSpan(
-                                                      text: '元',
-                                                      style: TextStyle(
-                                                          color:
-                                                              Color(0xFFD10123),
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontFamily:
-                                                              'PingFangSC-Medium,PingFang SC',
-                                                          fontSize: Ui
-                                                              .setFontSizeSetSp(
-                                                                  24.0))),
+//                                                  TextSpan(
+//                                                      text:
+//                                                          '+${item['goods']['retailPrice']}',
+//                                                      style: TextStyle(
+//                                                          color:
+//                                                              Color(0xFFD10123),
+//                                                          fontWeight:
+//                                                              FontWeight.w400,
+//                                                          fontFamily:
+//                                                              'PingFangSC-Medium,PingFang SC',
+//                                                          fontSize: Ui
+//                                                              .setFontSizeSetSp(
+//                                                                  34.0))),
+//                                                  TextSpan(
+//                                                      text: '元',
+//                                                      style: TextStyle(
+//                                                          color:
+//                                                              Color(0xFFD10123),
+//                                                          fontWeight:
+//                                                              FontWeight.w400,
+//                                                          fontFamily:
+//                                                              'PingFangSC-Medium,PingFang SC',
+//                                                          fontSize: Ui
+//                                                              .setFontSizeSetSp(
+//                                                                  24.0))),
                                                 ],
                                               ),
                                             ),
@@ -538,7 +569,7 @@ class _OrdercomState extends State<Ordercom> {
                                     width: Ui.width(10),
                                   ),
                                   Text(
-                                    '${points}积分+${retailPrice}元',
+                                    '${points}积分',
                                     style: TextStyle(
                                         color: Color(0xFFD10123),
                                         fontWeight: FontWeight.w400,
@@ -737,20 +768,20 @@ class _OrdercomState extends State<Ordercom> {
                                   fontWeight: FontWeight.w400,
                                   fontFamily: 'PingFangSC-Medium,PingFang SC',
                                   fontSize: Ui.setFontSizeSetSp(24.0))),
-                          TextSpan(
-                              text: '+${retailPrice}',
-                              style: TextStyle(
-                                  color: Color(0xFFD10123),
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: 'PingFangSC-Medium,PingFang SC',
-                                  fontSize: Ui.setFontSizeSetSp(32.0))),
-                          TextSpan(
-                              text: '元',
-                              style: TextStyle(
-                                  color: Color(0xFFD10123),
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: 'PingFangSC-Medium,PingFang SC',
-                                  fontSize: Ui.setFontSizeSetSp(24.0))),
+//                          TextSpan(
+//                              text: '+${retailPrice}',
+//                              style: TextStyle(
+//                                  color: Color(0xFFD10123),
+//                                  fontWeight: FontWeight.w400,
+//                                  fontFamily: 'PingFangSC-Medium,PingFang SC',
+//                                  fontSize: Ui.setFontSizeSetSp(32.0))),
+//                          TextSpan(
+//                              text: '元',
+//                              style: TextStyle(
+//                                  color: Color(0xFFD10123),
+//                                  fontWeight: FontWeight.w400,
+//                                  fontFamily: 'PingFangSC-Medium,PingFang SC',
+//                                  fontSize: Ui.setFontSizeSetSp(24.0))),
                         ],
                       ),
                     ),

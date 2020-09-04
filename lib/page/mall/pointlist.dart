@@ -88,32 +88,63 @@ class _PointlistState extends State<Pointlist> {
   Widget build(BuildContext context) {
     Ui.init(context);
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            '积分记录',
-            style: TextStyle(
-                color: Color(0xFF111F37),
-                fontWeight: FontWeight.w500,
-                fontFamily: 'PingFangSC-Medium,PingFang SC',
-                fontSize: Ui.setFontSizeSetSp(36.0)),
-          ),
-          centerTitle: true,
-          elevation: 0,
-          brightness: Brightness.light,
-          leading: InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
+        appBar: PreferredSize(
             child: Container(
-              alignment: Alignment.center,
-              child: Image.asset(
-                'images/2.0x/back.png',
-                width: Ui.width(21),
-                height: Ui.width(37),
-              ),
-            ),
-          ),
-        ),
+                padding: new EdgeInsets.only(
+                    top: MediaQuery.of(context).padding.top),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
+                      Color(0xFF5BBEFF),
+                      Color(0xFF466EFF),
+                    ],
+                  ),
+                ),
+                child: Container(
+                  height: Ui.height(90),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [
+                        Color(0xFF5BBEFF),
+                        Color(0xFF466EFF),
+                      ],
+                    ),
+                  ),
+                  child: Stack(
+                    children: <Widget>[
+                      Positioned(
+                          left: Ui.width(30),
+                          top: Ui.width(30),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Image.asset(
+                              'images/2.0x/back.png',
+                              width: Ui.width(20),
+                              height: Ui.width(36),
+                            ),
+                          )),
+                      Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          '积分记录',
+                          style: TextStyle(
+                              color: Color(0XFFFFFFFF),
+                              fontSize: Ui.setFontSizeSetSp(36),
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'PingFangSC-Regular,PingFang SC'),
+                        ),
+                      )
+                    ],
+                  ),
+                )),
+            preferredSize:
+            Size(MediaQuery.of(context).size.width, Ui.width(90))),
         body: islogin
             ? Container(
                 color: Colors.white,
