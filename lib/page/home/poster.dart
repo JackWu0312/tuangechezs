@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tuangechezs/common/Storage.dart';
 import 'package:tuangechezs/ui/ui.dart';
 import '../../http/index.dart';
@@ -13,7 +14,9 @@ import '../../common/PhotoViewGalleryScreen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class Poster extends StatefulWidget {
-  Poster({Key key}) : super(key: key);
+  final Map arguments;
+
+  Poster({Key key, this.arguments}) : super(key: key);
 
   @override
   _PosterState createState() => _PosterState();
@@ -41,8 +44,10 @@ class _PosterState extends State<Poster> {
   int page = 1;
   int limit = 10;
   var tag = '';
+  var keyWord = '';
   void initState() {
     super.initState();
+    isselect = widget.arguments['index'];
     gettags();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >
@@ -71,7 +76,7 @@ class _PosterState extends State<Poster> {
       if (value['errno'] == 0) {
         setState(() {
           listtag = value['data'];
-          tag = value['data'][0]['value'];
+          tag = value['data'][isselect]['value'];
         });
         getData();
       }
@@ -84,7 +89,7 @@ class _PosterState extends State<Poster> {
     // print(this.tag);
     if (isMore) {
       await HttpUtlis.get(
-          'third/poster/list?page=${this.page}&limit=${this.limit}&tag=${this.tag}&merged=${this.active}',
+          'third/poster/list?page=${this.page}&limit=${this.limit}&tag=${this.tag}&merged=${this.active}&title=${this.keyWord}',
           success: (value) {
         if (value['errno'] == 0) {
           if (value['data']['list'].length < limit) {
@@ -246,15 +251,73 @@ class _PosterState extends State<Poster> {
                                   ))),
                           Container(
                             alignment: Alignment.center,
-                            child: Text(
-                              '海报列表',
-                              style: TextStyle(
-                                  color: Color(0XFFFFFFFF),
-                                  fontSize: Ui.setFontSizeSetSp(36),
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'PingFangSC-Regular,PingFang SC'),
+                            child:  Container(
+                              width: Ui.width(600),
+                              height: Ui.width(70),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(Ui.width(35))
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  SizedBox(width: Ui.width(30),),
+                                  Image.asset(
+                                    'images/2.0x/searchnew.png',
+                                    width: Ui.width(28),
+                                    height: Ui.width(28),
+                                  ),
+                                  SizedBox(width: Ui.width(20),),
+                                  Expanded(
+                                    flex: 1,
+                                    child: TextField(
+                                      autofocus: false,
+                                      keyboardType: TextInputType.text,
+                                      style: TextStyle(
+                                          color: Color(0XFF111F37),
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: Ui.setFontSizeSetSp(28)),
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: '输入要搜索的内容',
+                                          hintStyle: TextStyle(
+                                              color: Color(0xFF9398A5),
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: Ui.setFontSizeSetSp(28)
+                                          )
+                                      ),
+                                      textInputAction: TextInputAction.search,
+                                      onSubmitted: (value){
+                                        print(value);
+                                        keyWord = value;
+                                        setState(() {
+                                          list = [];
+                                          nolist = true;
+                                          isMore = true;
+                                          page = 1;
+                                          limit = 10;
+                                        });
+                                        getData();
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
-                          )
+                          ),
+//                          Container(
+//                            alignment: Alignment.center,
+//                            child: Text(
+//                              '海报列表',
+//                              style: TextStyle(
+//                                  color: Color(0XFFFFFFFF),
+//                                  fontSize: Ui.setFontSizeSetSp(36),
+//                                  fontWeight: FontWeight.w500,
+//                                  fontFamily: 'PingFangSC-Regular,PingFang SC'),
+//                            ),
+//                          )
                         ],
                       ),
                     )),

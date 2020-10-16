@@ -13,6 +13,7 @@ import 'package:tuangechezs/page/my/addresslistnew.dart';
 import 'package:tuangechezs/page/my/adresseditor.dart';
 import 'package:tuangechezs/page/my/listorder.dart';
 import 'package:tuangechezs/page/my/rollbag.dart';
+import 'package:tuangechezs/page/my/task.dart';
 import '../page/login/login.dart';
 import '../page/login/register.dart';
 import '../page/index.dart';
@@ -42,7 +43,7 @@ final routes = {
   '/settlement': (context) => Settlement(),
   '/agent': (context) => Agent(),
   '/broker': (context) => Broker(),
-  '/poster': (context) => Poster(),
+  '/poster': (context,{arguments}) => Poster(arguments:arguments),
   '/videolist': (context) => Videolist(),
   '/warreport': (context) => Warreport(),
   '/stock': (context,{arguments}) => Stock(arguments:arguments),
@@ -67,6 +68,7 @@ final routes = {
   '/pointlist': (context) => Pointlist(),
   '/bannerwebview': (context,{arguments}) => Bannerwebview(arguments:arguments),
   '/coupon': (context) => Coupon(),
+  '/task': (context) => Task(),
 };
 
 //固定写法

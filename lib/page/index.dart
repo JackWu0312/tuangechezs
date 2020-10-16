@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tuangechezs/page/material/materialIndex.dart';
 import '../ui/ui.dart';
 import './home/home.dart';
 import './order/order.dart';
@@ -28,6 +29,7 @@ class _IndexPagesState extends State<IndexPages> {
            Home(),
            Order(),
             Mall(),
+            MaterialIndex(),
            My()
           ],
         ),
@@ -83,6 +85,19 @@ class _IndexPagesState extends State<IndexPages> {
                 height: Ui.width(55.0),
               ),
               title: Text("兑换"),
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                  'images/2.0x/material.png',
+                  width: Ui.width(65),
+                  height:Ui.width(55)
+              ),
+              activeIcon: Image.asset(
+                'images/2.0x/material_select.png',
+                width: Ui.width(65),
+                height: Ui.width(55),
+              ),
+              title: Text('素材'),
             ),
             BottomNavigationBarItem(
                 icon: Image.asset(

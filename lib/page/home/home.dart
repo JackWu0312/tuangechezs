@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tuangechezs/common/HttpHelper.dart';
+import 'package:tuangechezs/provider/TaskEvent.dart';
 import '../../ui/ui.dart';
 import '../../http/index.dart';
 import '../../common/Unit.dart';
@@ -366,7 +368,7 @@ class _HomeState extends State<Home> {
                       borderwidth(16.0),
                       Container(
                         padding: EdgeInsets.fromLTRB(Ui.width(30.0),
-                            Ui.width(30.0), Ui.width(24.0), Ui.width(10.0)),
+                            Ui.width(30.0), Ui.width(24.0), Ui.width(44.0)),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -376,7 +378,7 @@ class _HomeState extends State<Home> {
                                     '精选海报', Color(0XFF111F37), 34.0, 5)),
                             InkWell(
                               onTap: () {
-                                Navigator.pushNamed(context, '/poster');
+                                Navigator.pushNamed(context, '/poster',arguments: {'index':0});
                               },
                               child: Container(
                                 child: Row(
@@ -398,57 +400,154 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                       Container(
-                          width: Ui.width(750),
-                          height: Ui.width(380),
-                          padding: EdgeInsets.fromLTRB(Ui.width(30.0), 0, 0, 0),
-                          child: ListView.builder(
-                            itemCount: data['posters'].length,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () async {
-                                  String token =
-                                      await Storage.getString('userInfo');
-                                  Navigator.pushNamed(context, '/preview',
-                                      arguments: {
-                                        'detail': data['posters'][index],
-                                        'id': json.decode(token)['id']
-                                      });
-                                },
-                                child: Container(
-                                  width: Ui.width(250),
-                                  margin: EdgeInsets.fromLTRB(
-                                      0, 0, Ui.width(16), 0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Container(
-                                        width: Ui.width(250),
-                                        height: Ui.width(304),
-                                        child: CachedNetworkImage(
-                                            fit: BoxFit.fill,
-                                            imageUrl:
-                                                '${data['posters'][index]['picUrl']}'),
-                                      ),
-                                      SizedBox(
-                                        height: Ui.width(10),
-                                      ),
-                                      Container(
-                                        width: Ui.width(250),
-                                        child: Text(
-                                            '${data['posters'][index]['title']}',
-                                            overflow: TextOverflow.ellipsis,
-                                            style: Unit.textStyle(
-                                                Color(0XFF111F37), 30.0, 4)),
-                                      )
-                                    ],
-                                  ),
+                        padding: EdgeInsets.fromLTRB(Ui.width(30), 0, Ui.width(30), Ui.width(40)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            InkWell(
+                              onTap: () async {
+                                String token =
+                                    await Storage.getString('userInfo');
+                                Navigator.pushNamed(context, '/preview',
+                                    arguments: {
+                                      'detail': data['posters'][0],
+                                      'id': json.decode(token)['id']
+                                    });
+                              },
+                              child: Container(
+                                width: Ui.width(337),
+                                height: Ui.width(130),
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFF4F6FC),
+                                  borderRadius: BorderRadius.circular(Ui.width(12))
                                 ),
-                              );
-                            },
-                          )),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    SizedBox(width:Ui.width(28)),
+                                    Image.asset(
+                                      'images/2.0x/icon_every_day.png',
+                                      width: Ui.width(60),
+                                      height: Ui.width(60),
+                                    ),
+                                    SizedBox(width:Ui.width(22)),
+                                    Text('每日分享',
+                                      style: TextStyle(
+                                        color: Color(0xFF111F37),
+                                        fontSize: Ui.setFontSizeSetSp(30)
+                                      ),
+                                    ),
+                                    SizedBox(width:Ui.width(30)),
+                                    Image.asset(
+                                      'images/2.0x/rightmy.png',
+                                      width: Ui.width(13),
+                                      height: Ui.width(26),
+                                    ),
+                                    SizedBox(width:Ui.width(40)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: (){
+                                Navigator.pushNamed(context, '/poster',arguments: {'index': 1});
+                              },
+                              child: Container(
+                                width: Ui.width(337),
+                                height: Ui.width(130),
+                                decoration: BoxDecoration(
+                                    color: Color(0xFFF4F6FC),
+                                    borderRadius: BorderRadius.circular(Ui.width(12))
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    SizedBox(width:Ui.width(28)),
+                                    Image.asset(
+                                      'images/2.0x/icon_home_car.png',
+                                      width: Ui.width(60),
+                                      height: Ui.width(60),
+                                    ),
+                                    SizedBox(width:Ui.width(22)),
+                                    Text('车型推荐',
+                                      style: TextStyle(
+                                          color: Color(0xFF111F37),
+                                          fontSize: Ui.setFontSizeSetSp(30)
+                                      ),
+                                    ),
+                                    SizedBox(width:Ui.width(30)),
+                                    Image.asset(
+                                      'images/2.0x/rightmy.png',
+                                      width: Ui.width(13),
+                                      height: Ui.width(26),
+                                    ),
+                                    SizedBox(width:Ui.width(40)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Offstage(
+                        offstage: true,
+                        child: Container(
+                            width: Ui.width(750),
+                            height: Ui.width(380),
+                            padding: EdgeInsets.fromLTRB(Ui.width(30.0), 0, 0, 0),
+                            child: ListView.builder(
+                              itemCount: data['posters'].length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return InkWell(
+                                  onTap: () async {
+                                    String token =
+                                    await Storage.getString('userInfo');
+                                    Navigator.pushNamed(context, '/preview',
+                                        arguments: {
+                                          'detail': data['posters'][index],
+                                          'id': json.decode(token)['id']
+                                        });
+                                  },
+                                  child: Container(
+                                    width: Ui.width(250),
+                                    margin: EdgeInsets.fromLTRB(
+                                        0, 0, Ui.width(16), 0),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Container(
+                                          width: Ui.width(250),
+                                          height: Ui.width(304),
+                                          child: CachedNetworkImage(
+                                              fit: BoxFit.fill,
+                                              imageUrl:
+                                              '${data['posters'][index]['picUrl']}'),
+                                        ),
+                                        SizedBox(
+                                          height: Ui.width(10),
+                                        ),
+                                        Container(
+                                          width: Ui.width(250),
+                                          child: Text(
+                                              '${data['posters'][index]['title']}',
+                                              overflow: TextOverflow.ellipsis,
+                                              style: Unit.textStyle(
+                                                  Color(0XFF111F37), 30.0, 4)),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            )),
+                      ),
+
                       borderwidth(16.0),
                       Container(
                         padding: EdgeInsets.fromLTRB(Ui.width(30.0),
@@ -542,6 +641,8 @@ class _HomeState extends State<Home> {
                                   //   context,
                                   //   '/videolist',
                                   // );
+                                  //浏览软文足迹
+                                  HttpHelper.saveFootprint(data['videos'][index]['title'],data['videos'][index]['id'], '5', context);
                                   Navigator.of(context).push(CupertinoPageRoute(
                                       builder: (_) => FullVideoPage(
                                             playType: PlayType.network,

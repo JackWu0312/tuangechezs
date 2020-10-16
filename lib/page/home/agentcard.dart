@@ -336,9 +336,9 @@ class _AgentcardState extends State<Agentcard> {
                                   },
                                   child: Container(
                                     margin: EdgeInsets.fromLTRB(
-                                        Ui.width(280), Ui.width(60), 0, 0),
-                                    width: Ui.width(190),
-                                    height: Ui.width(190),
+                                        Ui.width(220), Ui.width(30), 0, 0),
+                                    width: Ui.width(250),
+                                    height: Ui.width(250),
                                     child: CachedNetworkImage(
                                         fit: BoxFit.fill,
                                         imageUrl: '${this.qrcode}'),
@@ -352,7 +352,7 @@ class _AgentcardState extends State<Agentcard> {
                                     },
                                     child: Container(
                                       margin: EdgeInsets.fromLTRB(
-                                          Ui.width(69), Ui.width(90), 0, 0),
+                                          Ui.width(69), Ui.width(30), 0, 0),
                                       child: Container(
                                         width: Ui.width(600),
                                         height: Ui.width(90),

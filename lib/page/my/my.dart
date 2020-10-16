@@ -524,6 +524,44 @@ class _MyState extends State<My> {
                 ),
                 InkWell(
                   onTap: () {
+                    Navigator.pushNamed(context, '/task');
+                  },
+                  child: Container(
+                    width: Ui.width(750),
+                    height: Ui.width(130),
+                    margin: EdgeInsets.fromLTRB(0, Ui.width(20), 0, 0),
+                    padding:
+                    EdgeInsets.fromLTRB(Ui.width(30), 0, Ui.width(50), 0),
+                    decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                      BoxShadow(
+                        color: Color(0XFFEEF3F9),
+                        offset: Offset(1, 0),
+                        blurRadius: Ui.width(20.0),
+                      ),
+                    ]),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          '我的任务',
+                          style: TextStyle(
+                              color: Color(0XFF111F37),
+                              fontSize: Ui.setFontSizeSetSp(32),
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'PingFangSC-Regular,PingFang SC'),
+                        ),
+                        Image.asset(
+                          'images/2.0x/rightmore.png',
+                          width: Ui.width(15),
+                          height: Ui.width(28),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
                     Navigator.pushNamed(context, '/qrcode',
                         arguments: {'imgurl': qrcode, 'user': data,'id':data['id']});
                   },

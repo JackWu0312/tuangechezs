@@ -272,6 +272,33 @@ flutter:
     - images/backnew.png
     - images/2.0x/backnew.png
     - images/3.0x/backnew.png
+    - images/material.png
+    - images/2.0x/material.png
+    - images/3.0x/material.png
+    - images/material_select.png
+    - images/2.0x/material_select.png
+    - images/3.0x/material_select.png
+    - images/arrow_down.png
+    - images/2.0x/arrow_down.png
+    - images/3.0x/arrow_down.png
+    - images/forward.png
+    - images/2.0x/forward.png
+    - images/3.0x/forward.png
+    - images/download.png
+    - images/2.0x/download.png
+    - images/3.0x/download.png
+    - images/icon_copy.png
+    - images/2.0x/icon_copy.png
+    - images/3.0x/icon_copy.png
+    - images/icon_every_day.png
+    - images/2.0x/icon_every_day.png
+    - images/3.0x/icon_every_day.png
+    - images/icon_home_car.png
+    - images/2.0x/icon_home_car.png
+    - images/3.0x/icon_home_car.png
+    - images/taskbg.png
+    - images/2.0x/taskbg.png
+    - images/3.0x/taskbg.png
     - images/icon_back.png
     - images/place_nodata.png
     - images/player_lock.png

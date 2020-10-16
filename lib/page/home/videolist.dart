@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:tuangechezs/common/HttpHelper.dart';
 import 'package:tuangechezs/common/Nofind.dart';
+import 'package:tuangechezs/provider/TaskEvent.dart';
 import '../../ui/ui.dart';
 import '../../http/index.dart';
 import '../../common/Unit.dart';
@@ -191,6 +194,8 @@ class _VideolistState extends State<Videolist> {
                               children: <Widget>[
                                 InkWell(
                                   onTap: () {
+                                    //浏览软文足迹
+                                    HttpHelper.saveFootprint(list[index]['title'],list[index]['id'], '5', context);
                                     Navigator.of(context)
                                         .push(CupertinoPageRoute(
                                             builder: (_) => FullVideoPage(

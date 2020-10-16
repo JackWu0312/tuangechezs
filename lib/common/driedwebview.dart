@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:tuangechezs/common/HttpHelper.dart';
+import 'package:tuangechezs/provider/TaskEvent.dart';
 import '../ui/ui.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import './LoadingDialog.dart';
@@ -17,6 +20,8 @@ class _DriedwebviewState extends State<Driedwebview> {
   bool isloading = false;
   void initState() {
     super.initState();
+    //浏览软文足迹
+    HttpHelper.saveFootprint(widget.arguments['title'], widget.arguments['id'], '4', context);
   }
   @override
   Widget build(BuildContext context) {

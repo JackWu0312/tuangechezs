@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tuangechezs/event/ShareBackEvent.dart';
 import 'package:tuangechezs/provider/Integral.dart';
+import 'package:tuangechezs/provider/TaskEvent.dart';
 import '../ui/ui.dart';
 import '../http/index.dart';
 import '../common/Unit.dart';
@@ -105,6 +106,9 @@ class _ShareBottomSheetState extends State<ShareBottomSheet> {
         counter.increment(true);
         final counterIntegral = Provider.of<Integral>(context);
         counterIntegral.increment(true);
+        //任务数据刷新
+        final taskCounter = Provider.of<TaskEvent>(context);
+        taskCounter.increment(true);
       }
     }, failure: (error) {
       Unit.setToast(error, context);
