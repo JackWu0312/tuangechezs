@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 import '../../ui/ui.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../common/Unit.dart';
@@ -19,6 +20,7 @@ class _WarreportState extends State<Warreport> {
   bool isloading = false;
   var data;
   var active = 1;
+  var historyTime = DateTime.now().toString().substring(0,7);
   int isAgent = 1;
   @override
   void initState() {
@@ -40,7 +42,7 @@ class _WarreportState extends State<Warreport> {
   }
 
   getData() async {
-    await HttpUtlis.get('third/home/report?timeLevel=${this.active}',
+    await HttpUtlis.get('third/home/report?timeLevel=${this.active}&date=${this.historyTime}',
         success: (value) {
       if (value['errno'] == 0) {
         setState(() {
@@ -53,6 +55,30 @@ class _WarreportState extends State<Warreport> {
     setState(() {
       isloading = true;
     });
+  }
+
+  DateTime _dateTime;
+  _showDatePicker() {
+    DatePicker.showDatePicker(
+      context,
+      pickerTheme: DateTimePickerTheme(
+        showTitle: true,
+        confirm: Text('确定', style: TextStyle(color: Color(0xFF5BBEFF))),
+        cancel: Text('取消', style: TextStyle(color: Color(0xFF6A7182))),
+      ),
+      minDateTime: DateTime(1970,1),
+      maxDateTime: DateTime.now(),
+      initialDateTime: DateTime.parse(historyTime+'-01'),
+      dateFormat: 'yyyy-MM',
+      locale: DateTimePickerLocale.zh_cn,
+      onCancel: () => print('onCancel'),
+      onConfirm: (dateTime, List<int> index) {
+        historyTime =  dateTime.toString().substring(0, 7);
+        setState(() {
+          getData();
+        });
+      },
+    );
   }
 
   gettagsWidget() {
@@ -225,7 +251,7 @@ class _WarreportState extends State<Warreport> {
                                     onTap: () {
                                       setState(() {
                                         active = 3;
-                                         getData();
+                                        _showDatePicker();
                                       });
                                     },
                                     child: Container(
@@ -244,7 +270,7 @@ class _WarreportState extends State<Warreport> {
                                                   : Color(0xFFB0B1BB)),
                                         ),
                                         child: Unit.text(
-                                            '本月数据',
+                                            this.historyTime,
                                             active == 3
                                                 ? Color(0xFF2F8CFA)
                                                 : Color(0xFFB0B1BB),

@@ -285,6 +285,7 @@ class _TaskState extends State<Task> {
         counter.increment(false);
       });
       gettasks();
+      getUserInfo();
     }
     Ui.init(context);
     showtosh(continuousDays, signPoints) {
