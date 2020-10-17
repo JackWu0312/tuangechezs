@@ -221,7 +221,7 @@ class _CouponState extends State<Coupon> {
                                                       height: Ui.width(12),
                                                     ),
                                                     Text(
-                                                      '${list[index]['tag']}',
+                                                      list[index]['tag']!=null?'${list[index]['tag']}':"",
                                                       style: TextStyle(
                                                           color:
                                                               Color(0xFF9398A5),
@@ -419,7 +419,7 @@ class _CouponState extends State<Coupon> {
                                                       alignment:
                                                           Alignment.center,
                                                       child: Text(
-                                                        '立即领取',
+                                                        list[index]['points']>0?'${list[index]['points']}积分':'立即领取',
                                                         maxLines: 1,
                                                         overflow: TextOverflow
                                                             .ellipsis,
@@ -472,7 +472,7 @@ class _CouponState extends State<Coupon> {
                                                   CrossAxisAlignment.start,
                                               children: <Widget>[
                                                 Text(
-                                                  '${list[index]['desc']}',
+                                                  list[index]['desc']!= null?'${list[index]['desc']}':"",
                                                   style: TextStyle(
                                                       color: Color(0xFF111F37),
                                                       fontWeight:
