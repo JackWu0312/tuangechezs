@@ -1,14 +1,22 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: jackWu
+ * @Date: 2020-10-16 10:38:30
+ * @LastEditors: sueRimn
+ * @LastEditTime: 2020-10-17 11:47:32
+ */
 import 'package:dio/dio.dart';
 import '../common/Storage.dart';
 class HttpUtlis {
-//  static String _domain = 'https://api.tuangeche.com.cn/';
-    static String _domain = 'http://192.168.1.51:8080/';
+ static String _domain = 'http://test.api.tuangeche.com.cn/';
+    // static String _domain = 'http://192.168.1.51:8080/';
   static getToken() async {
     try {
       String token = await Storage.getString('token');
       return token;
     } catch (e) {
-      return '';
+      return '';  
     }
   }
 
