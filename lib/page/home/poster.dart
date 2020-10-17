@@ -42,7 +42,7 @@ class _PosterState extends State<Poster> {
   bool nolist = true;
   bool isMore = true;
   int page = 1;
-  int limit = 10;
+  int limit = 6;
   var tag = '';
   var keyWord = '';
   void initState() {
@@ -443,7 +443,7 @@ class _PosterState extends State<Poster> {
                                                 child: CachedNetworkImage(
                                                     fit: BoxFit.fill,
                                                     imageUrl:
-                                                        '${list[index]['picUrl']}'),
+                                                        '${list[index]['picUrl']}'+'?x-oss-process=image/resize,w_200'),
                                               ),
 
                                               Container(
