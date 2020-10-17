@@ -49,6 +49,7 @@ class _RollbagState extends State<Rollbag> {
     if (isMore) {
       await HttpUtlis.get('third/coupon/mine?page=${page}&limit=${limit}',
           success: (value) {
+        print(value);
         if (value['errno'] == 0) {
           var listdata = value['data']['list'];
           for (var i = 0, len = listdata.length; i < len; i++) {
@@ -598,7 +599,7 @@ transfer(id,userId,state)async{
                                           child: Stack(
                                             children: <Widget>[
                                               Positioned(
-                                                top: Ui.width(40),
+                                                top: Ui.width(60),
                                                 child: Container(
                                                   width: Ui.width(230),
                                                   child: Row(
@@ -658,40 +659,40 @@ transfer(id,userId,state)async{
                                               //     ),
                                               //   ),
                                               // ),
-                                              Positioned(
-                                                  top: Ui.width(135),
-                                                  left: Ui.width(45),
-                                                  child: InkWell(
-                                                    onTap: () {
-//                                                      counter.increment(1);
-                                                      Navigator.popAndPushNamed(
-                                                          context, '/');
-                                                      // getreceive(list[index]['id']);
-                                                    },
-                                                    child: Container(
-                                                      width: Ui.width(140),
-                                                      height: Ui.width(45),
-                                                      color: Color(0xFF8D551B),
-                                                      alignment:
-                                                          Alignment.center,
-                                                      child: Text(
-                                                        '立即使用',
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: TextStyle(
-                                                            color: Color(
-                                                                0xFFF4CF71),
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            fontFamily:
-                                                                'PingFangSC-Medium,PingFang SC',
-                                                            fontSize: Ui
-                                                                .setFontSizeSetSp(
-                                                                    22.0)),
-                                                      ),
-                                                    ),
-                                                  ))
+//                                              Positioned(
+//                                                  top: Ui.width(135),
+//                                                  left: Ui.width(45),
+//                                                  child: InkWell(
+//                                                    onTap: () {
+////                                                      counter.increment(1);
+//                                                      Navigator.popAndPushNamed(
+//                                                          context, '/');
+//                                                      // getreceive(list[index]['id']);
+//                                                    },
+//                                                    child: Container(
+//                                                      width: Ui.width(140),
+//                                                      height: Ui.width(45),
+//                                                      color: Color(0xFF8D551B),
+//                                                      alignment:
+//                                                          Alignment.center,
+//                                                      child: Text(
+//                                                        '立即使用',
+//                                                        maxLines: 1,
+//                                                        overflow: TextOverflow
+//                                                            .ellipsis,
+//                                                        style: TextStyle(
+//                                                            color: Color(
+//                                                                0xFFF4CF71),
+//                                                            fontWeight:
+//                                                                FontWeight.w400,
+//                                                            fontFamily:
+//                                                                'PingFangSC-Medium,PingFang SC',
+//                                                            fontSize: Ui
+//                                                                .setFontSizeSetSp(
+//                                                                    22.0)),
+//                                                      ),
+//                                                    ),
+//                                                  ))
                                               // Positioned(
                                               //   top: Ui.width(0),
                                               //   left: Ui.width(0),
