@@ -115,7 +115,7 @@
 	<key>NSCalendarsUsageDescription</key>
 	<string>是否允许团个车助手使用你的日历</string>
 	<key>NSCameraUsageDescription</key>
-	<string>是否允许团个车助手使用你的相机</string>
+	<string>是否允许团个车助手使用你的相机进行头像更换</string>
 	<key>NSContactsUsageDescription</key>
 	<string>是否允许团个车助手访问你的通讯录</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
@@ -133,7 +133,7 @@
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>请允许APP保存图片到相册</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>是否允许团个车助手访问你的相册</string>
+	<string>是否允许团个车助手访问你的相册进行头像更换</string>
 	<key>NSRemindersUsageDescription</key>
 	<string>是否允许团个车助手使用你的提醒事项</string>
 	<key>NSSpeechRecognitionUsageDescription</key>

@@ -225,7 +225,7 @@ class _BrokercardState extends State<Brokercard> {
                                   margin: EdgeInsets.fromLTRB(Ui.width(116),
                                       Ui.width(75), Ui.width(40), 0),
                                   child: Text(
-                                    '太原团个车网络科技有限公司',
+                                    '山西团个车网络科技有限公司',
                                     style: TextStyle(
                                         color: Color(0XFF111F37),
                                         fontSize: Ui.setFontSizeSetSp(32),
