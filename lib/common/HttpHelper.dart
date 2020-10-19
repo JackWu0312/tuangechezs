@@ -1,6 +1,7 @@
 
 import 'package:provider/provider.dart';
 import 'package:tuangechezs/http/index.dart';
+import 'package:tuangechezs/provider/Integral.dart';
 import 'package:tuangechezs/provider/TaskEvent.dart';
 
 import 'Unit.dart';
@@ -15,6 +16,9 @@ class HttpHelper{
             //任务数据刷新
             final taskCounter = Provider.of<TaskEvent>(context);
             taskCounter.increment(true);
+            //积分刷新
+            final counterIntegral = Provider.of<Integral>(context);
+            counterIntegral.increment(true);
           }
         }, failure: (error) {
           Unit.setToast(error, context);
