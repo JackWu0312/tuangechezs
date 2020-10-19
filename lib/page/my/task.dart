@@ -96,25 +96,25 @@ class _TaskState extends State<Task> {
     });
   }
 
-  signIn() async {
-    await HttpUtlis.post('wx/user/signIn', success: (value) {
-      if (value['errno'] == 0) {
-        setState(() {
-          continuousDays = value['data']['continuousDays'];
-          signPoints = value['data']['signPoints'];
-        });
-        getlog();
-        final counter = Provider.of<Taskback>(context);
-        counter.increment(true);
-      }
-    }, failure: (error) {
-      Toast.show('${error}', context,
-          backgroundColor: Color(0xff5b5956),
-          backgroundRadius: Ui.width(16),
-          duration: Toast.LENGTH_SHORT,
-          gravity: Toast.CENTER);
-    });
-  }
+//  signIn() async {
+//    await HttpUtlis.post('wx/user/signIn', success: (value) {
+//      if (value['errno'] == 0) {
+//        setState(() {
+//          continuousDays = value['data']['continuousDays'];
+//          signPoints = value['data']['signPoints'];
+//        });
+//        getlog();
+//        final counter = Provider.of<Taskback>(context);
+//        counter.increment(true);
+//      }
+//    }, failure: (error) {
+//      Toast.show('${error}', context,
+//          backgroundColor: Color(0xff5b5956),
+//          backgroundRadius: Ui.width(16),
+//          duration: Toast.LENGTH_SHORT,
+//          gravity: Toast.CENTER);
+//    });
+//  }
 
   getdom() {
     List<Widget> listwidget = [];
@@ -505,10 +505,10 @@ class _TaskState extends State<Task> {
                                 ? Text('')
                                 : InkWell(
                                     onTap: () async {
-                                      if (status == 2) {
-                                        await signIn();
-                                        showtosh(continuousDays, signPoints);
-                                      }
+//                                      if (status == 2) {
+//                                        await signIn();
+//                                        showtosh(continuousDays, signPoints);
+//                                      }
                                     },
                                     child: Container(
                                       width: Ui.width(250),
