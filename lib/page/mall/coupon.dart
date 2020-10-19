@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tuangechezs/provider/Integral.dart';
 import '../../ui/ui.dart';
 import '../../http/index.dart';
 import 'package:toast/toast.dart';
@@ -409,6 +411,8 @@ class _CouponState extends State<Coupon> {
                                                   left: Ui.width(45),
                                                   child: InkWell(
                                                     onTap: () {
+                                                      final counterIntegral = Provider.of<Integral>(context);
+                                                      counterIntegral.increment(true);
                                                       getreceive(
                                                           list[index]['id']);
                                                     },
